@@ -1,0 +1,11 @@
+[gd_scene format=3 uid="uid://m43e5bi10n1u"]
+
+[ext_resource type="Script" uid="uid://bgcft7qjxmrt6" path="res://src/tileselector/tile_selector.gd" id="1_5tkqq"]
+[ext_resource type="Texture2D" uid="uid://cb7wxyrqpakls" path="res://src/tileselector/select.png" id="2_c3g07"]
+
+[node name="TileSelector" type="Node2D" unique_id=1436156362]
+script = ExtResource("1_5tkqq")
+
+[node name="Select" type="Sprite2D" parent="." unique_id=860714460]
+texture = ExtResource("2_c3g07")
+hframes = 2
