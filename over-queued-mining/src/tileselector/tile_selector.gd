@@ -21,14 +21,17 @@ func _input(event: InputEvent) -> void:
 	currentTilePos.y = int((currentPos.y-8)/16.0)
 	
 	if event.is_action_pressed("click") and grabbed == null:selectorArea.sendHit(clickHitData)
-	if event.is_action_pressed("right_click") or (event.is_action_pressed("click") and grabbed != null):
+	if grabbed is GameObject:
+		if event.is_action_pressed("rotate_up"): grabbed.rotationInputUp()
+		if event.is_action_pressed("roate_down"): grabbed.rotationInputDown()
+	
+	if event.is_action_pressed("right_click") or event.is_action_pressed("click") and grabbed != null:
 		if grabbed == null:
 			grabbed = selectorArea.getOnRegion()[0].object
 			grabbed.reparent(grabNode)
 		else:
 			grabbed.reparent(objectsLayer)
 			grabbed = null
-			
 
 func _process(_delta: float) -> void:
 	position = currentPos
