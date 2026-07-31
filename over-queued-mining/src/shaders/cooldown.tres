@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" format=3 uid="uid://dedym2lc1be3e"]
+
+[ext_resource type="Shader" uid="uid://qwg0b35ihj21" path="res://src/world/block/cooldown.gdshader" id="1_ymdn1"]
+
+[resource]
+shader = ExtResource("1_ymdn1")
+shader_parameter/cooldownPercent = 0.0
+shader_parameter/spriteSheerH = 4.0
+shader_parameter/spriteSheerV = 1.0

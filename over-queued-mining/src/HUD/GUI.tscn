@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://cy1nh6wd2dvyk"]
+
+[ext_resource type="Script" uid="uid://unn02xepr1ba" path="res://src/HUD/gui.gd" id="1_4ljqj"]
+
+[sub_resource type="Theme" id="Theme_k3nxe"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k3nxe"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0, 0, 0, 0.27450982)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_silce"]
+font_size = 12
+font_color = Color(0.9647059, 0.93333334, 0.90588236, 1)
+outline_size = 4
+outline_color = Color(0.20018968, 0.13930744, 0.2548483, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_k3nxe"]
+font_color = Color(0.9647059, 0.93333334, 0.90588236, 1)
+outline_size = 4
+outline_color = Color(0.20018968, 0.13930744, 0.2548483, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="Gui" type="CanvasLayer" unique_id=1432043895]
+script = ExtResource("1_4ljqj")
+
+[node name="Control" type="MarginContainer" parent="." unique_id=1564554564]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control" unique_id=190384977]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=1636027842]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="panel" type="PanelContainer" parent="Control/VBoxContainer/HBoxContainer" unique_id=1943059803]
+custom_minimum_size = Vector2(80, 96)
+layout_mode = 2
+size_flags_vertical = 0
+theme = SubResource("Theme_k3nxe")
+theme_override_styles/panel = SubResource("StyleBoxFlat_k3nxe")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/HBoxContainer/panel" unique_id=908767789]
+layout_mode = 2
+
+[node name="Coins" type="Label" parent="Control/VBoxContainer/HBoxContainer/panel/VBoxContainer" unique_id=2138607072]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Points: 0"
+label_settings = SubResource("LabelSettings_silce")
+
+[node name="Label" type="Label" parent="Control/VBoxContainer" unique_id=1398272142]
+layout_mode = 2
+size_flags_vertical = 8
+text = "Infor Test"
+label_settings = SubResource("LabelSettings_k3nxe")
+horizontal_alignment = 1

@@ -2,10 +2,25 @@
 
 [ext_resource type="Script" uid="uid://bgcft7qjxmrt6" path="res://src/tileselector/tile_selector.gd" id="1_5tkqq"]
 [ext_resource type="Texture2D" uid="uid://cb7wxyrqpakls" path="res://src/tileselector/select.png" id="2_c3g07"]
+[ext_resource type="Script" uid="uid://b05o1uwr217vr" path="res://src/classes/hitSender.gd" id="3_pq5yq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3nxe"]
+size = Vector2(12, 12)
 
 [node name="TileSelector" type="Node2D" unique_id=1436156362]
 script = ExtResource("1_5tkqq")
 
 [node name="Select" type="Sprite2D" parent="." unique_id=860714460]
+z_index = 2
 texture = ExtResource("2_c3g07")
 hframes = 2
+vframes = 2
+
+[node name="Area2D" type="Area2D" parent="." unique_id=978990418]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("3_pq5yq")
+metadata/_custom_type_script = "uid://b05o1uwr217vr"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=349195978]
+shape = SubResource("RectangleShape2D_k3nxe")

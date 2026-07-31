@@ -1,0 +1,152 @@
+[gd_scene format=3 uid="uid://btqinqnbprfud"]
+
+[ext_resource type="Script" uid="uid://ceq50kc420va0" path="res://src/gears/interactor/interactor.gd" id="1_uvi5m"]
+[ext_resource type="Texture2D" uid="uid://mb6jq0tbx860" path="res://src/gears/interactor/interactor.png" id="2_r3f2s"]
+[ext_resource type="Script" uid="uid://vkdydfnum0c2" path="res://src/classes/interactiveArea.gd" id="3_u2oma"]
+[ext_resource type="Script" uid="uid://b05o1uwr217vr" path="res://src/classes/hitSender.gd" id="4_r3f2s"]
+[ext_resource type="Script" uid="uid://bhlvgwrkobwdh" path="res://src/classes/windup.gd" id="6_732ao"]
+[ext_resource type="Script" uid="uid://chgum0ddo1r1j" path="res://src/classes/cooldown.gd" id="6_eu043"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3nxe"]
+size = Vector2(12, 12)
+
+[sub_resource type="Animation" id="Animation_uvi5m"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Interactor:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Interactor:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/Interactor:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_r3f2s"]
+resource_name = "shoot"
+length = 0.39999999999999997
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Interactor:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot/Interactor:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.2, 0.4),
+"transitions": PackedFloat32Array(3.6050012, 3.138338, 0.42044798, 3.363586),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-2, 0), Vector2(1.5, 0), Vector2(0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("pivot/Interactor:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.15),
+"transitions": PackedFloat32Array(3.6050022, 0.4506255, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.3, 1.3), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u2oma"]
+_data = {
+&"RESET": SubResource("Animation_uvi5m"),
+&"shoot": SubResource("Animation_r3f2s")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u2oma"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hijj2"]
+size = Vector2(12, 12)
+
+[node name="Interactor" type="Node2D" unique_id=36085486]
+script = ExtResource("1_uvi5m")
+
+[node name="InteractiveArea" type="Area2D" parent="." unique_id=1725366710 node_paths=PackedStringArray("object", "cooldown")]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("3_u2oma")
+object = NodePath("..")
+cooldown = NodePath("../cooldown")
+metadata/_custom_type_script = "uid://vkdydfnum0c2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractiveArea" unique_id=335975234]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_k3nxe")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2007357938]
+libraries/ = SubResource("AnimationLibrary_u2oma")
+
+[node name="pivot" type="Node2D" parent="." unique_id=1761787510]
+position = Vector2(8, 8)
+
+[node name="Interactor" type="Sprite2D" parent="pivot" unique_id=68211666]
+material = SubResource("ShaderMaterial_u2oma")
+texture = ExtResource("2_r3f2s")
+hframes = 4
+
+[node name="HitSender" type="Area2D" parent="pivot" unique_id=1342764840]
+position = Vector2(16, 0)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("4_r3f2s")
+metadata/_custom_type_script = "uid://b05o1uwr217vr"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/HitSender" unique_id=1496286147]
+shape = SubResource("RectangleShape2D_hijj2")
+
+[node name="cooldown" type="Timer" parent="." unique_id=1343594841 node_paths=PackedStringArray("texture")]
+wait_time = 0.4
+one_shot = true
+script = ExtResource("6_eu043")
+texture = NodePath("../pivot/Interactor")
+
+[node name="windup" type="Timer" parent="." unique_id=955034698]
+wait_time = 0.25
+one_shot = true
+script = ExtResource("6_732ao")
+
+[connection signal="hasBeenHited" from="InteractiveArea" to="." method="_on_interactive_area_has_been_hited"]
+[connection signal="stopedWindUP" from="windup" to="." method="_on_windup_stoped_wind_up"]

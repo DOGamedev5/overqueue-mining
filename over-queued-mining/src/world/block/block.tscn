@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://bhpmwrveuo3yj"]
+
+[ext_resource type="Script" uid="uid://dwrve3nk8gfr0" path="res://src/world/block/block.gd" id="1_hcevw"]
+[ext_resource type="Texture2D" uid="uid://dgnubr2mabtkr" path="res://src/world/block/block.png" id="1_ihowl"]
+[ext_resource type="Script" uid="uid://vkdydfnum0c2" path="res://src/classes/interactiveArea.gd" id="2_h1b2h"]
+[ext_resource type="Script" uid="uid://chgum0ddo1r1j" path="res://src/classes/cooldown.gd" id="5_8osg2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3nxe"]
+size = Vector2(16, 16)
+
+[sub_resource type="Shader" id="Shader_d7v1o"]
+resource_local_to_scene = true
+code = "shader_type canvas_item;
+
+uniform float cooldownPercent = 0;
+
+void fragment() {
+	vec4 base = COLOR;
+	float dist = distance(UV, vec2(0.5, 0.5));
+	
+	if (dist < cooldownPercent * sqrt(0.5*0.5 + 0.5*0.5)) {
+		COLOR = base + vec4(0.3, 0.3, 0.2, 0);
+	}
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d7v1o"]
+shader = SubResource("Shader_d7v1o")
+shader_parameter/cooldownPercent = 0.0
+
+[node name="Block" type="Node2D" unique_id=914735519]
+script = ExtResource("1_hcevw")
+
+[node name="hitbox" type="Area2D" parent="." unique_id=837208860 node_paths=PackedStringArray("object", "cooldown")]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("2_h1b2h")
+object = NodePath("..")
+cooldown = NodePath("../cooldown")
+metadata/_custom_type_script = "uid://vkdydfnum0c2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="hitbox" unique_id=2049031447]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_k3nxe")
+
+[node name="pivot" type="Node2D" parent="." unique_id=2061278458]
+position = Vector2(8, 8)
+
+[node name="Block" type="Sprite2D" parent="pivot" unique_id=1956901413]
+material = SubResource("ShaderMaterial_d7v1o")
+texture = ExtResource("1_ihowl")
+
+[node name="cooldown" type="Timer" parent="." unique_id=880060567 node_paths=PackedStringArray("texture")]
+wait_time = 0.7
+one_shot = true
+script = ExtResource("5_8osg2")
+texture = NodePath("../pivot/Block")
+metadata/_custom_type_script = "uid://chgum0ddo1r1j"
+
+[connection signal="hasBeenHited" from="hitbox" to="." method="_on_hitbox_has_been_hited"]
