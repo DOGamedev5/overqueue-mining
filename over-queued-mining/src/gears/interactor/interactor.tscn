@@ -138,7 +138,7 @@ metadata/_custom_type_script = "uid://b05o1uwr217vr"
 shape = SubResource("RectangleShape2D_hijj2")
 
 [node name="cooldown" type="Timer" parent="." unique_id=1343594841 node_paths=PackedStringArray("texture")]
-wait_time = 0.4
+wait_time = 0.3
 one_shot = true
 script = ExtResource("6_eu043")
 texture = NodePath("../pivot/Interactor")

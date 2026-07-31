@@ -51,7 +51,7 @@ material = SubResource("ShaderMaterial_d7v1o")
 texture = ExtResource("1_ihowl")
 
 [node name="cooldown" type="Timer" parent="." unique_id=880060567 node_paths=PackedStringArray("texture")]
-wait_time = 0.7
+wait_time = 0.6
 one_shot = true
 script = ExtResource("5_8osg2")
 texture = NodePath("../pivot/Block")

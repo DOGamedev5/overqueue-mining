@@ -9,6 +9,9 @@ extends Node2D
 
 @onready var clickHitData : HitData = HitData.new(1)
 
+@onready var grabbed : Node2D = null
+@onready var grabNode := $grabbed
+
 func _input(event: InputEvent) -> void:
 	var posUnhandled = get_global_mouse_position()
 	currentPos.x = snappedi(posUnhandled.x+8, 16)-8
@@ -17,7 +20,15 @@ func _input(event: InputEvent) -> void:
 	currentTilePos.x = int((currentPos.x-8)/16.0)
 	currentTilePos.y = int((currentPos.y-8)/16.0)
 	
-	if event.is_action_pressed("click"): selectorArea.sendHit(clickHitData)
+	if event.is_action_pressed("click") and grabbed == null:selectorArea.sendHit(clickHitData)
+	if event.is_action_pressed("right_click") or (event.is_action_pressed("click") and grabbed != null):
+		if grabbed == null:
+			grabbed = selectorArea.getOnRegion()[0].object
+			grabbed.reparent(grabNode)
+		else:
+			grabbed.reparent(objectsLayer)
+			grabbed = null
+			
 
 func _process(_delta: float) -> void:
 	position = currentPos
@@ -25,7 +36,9 @@ func _process(_delta: float) -> void:
 	var data : TileData = wallTileMap.get_cell_tile_data(currentTilePos)
 	sprite.frame = 0 if data == null else 1
 	
-	if objectsLayer != null:
+	if grabbed != null: sprite.frame = 2
+	
+	if objectsLayer != null and grabbed == null:
 		for area in selectorArea.getOnRegion():
 			if area.object is BlockStone: sprite.frame = 3
 

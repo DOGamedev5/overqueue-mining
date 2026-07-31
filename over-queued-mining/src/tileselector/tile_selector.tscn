@@ -16,6 +16,9 @@ texture = ExtResource("2_c3g07")
 hframes = 2
 vframes = 2
 
+[node name="grabbed" type="Node2D" parent="." unique_id=344979357]
+position = Vector2(-8, -8)
+
 [node name="Area2D" type="Area2D" parent="." unique_id=978990418]
 collision_layer = 0
 collision_mask = 2

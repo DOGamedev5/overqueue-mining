@@ -7,10 +7,10 @@ signal hasBeenHited(hitInfo : HitData)
 
 func _init():
 	collision_mask = 0
+	collision_layer = 2
 
 func hit(hitInfo : HitData):
-	if cooldown != null and cooldown.time_left > 0 and hitInfo.bypassCooldown == false: 
-		print("aaa")
+	if cooldown != null and cooldown.time_left > 0 and not hitInfo.bypassCooldown: 
 		return
 	
 	hasBeenHited.emit(hitInfo)

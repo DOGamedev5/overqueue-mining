@@ -1,5 +1,9 @@
 class_name HitSender extends Area2D
 
+func _init():
+	collision_mask = 2
+	collision_layer = 0
+
 func getOnRegion() -> Array[InteractiveArea]:
 	var array : Array[InteractiveArea]
 	for area in get_overlapping_areas():

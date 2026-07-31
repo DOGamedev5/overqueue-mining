@@ -18,4 +18,7 @@ func wind(data : HitData):
 func windUpFinish():
 	stopedWindUP.emit(queue.front())
 	queue.pop_front()
-	started = false
+	if queue.size() > 0:
+		start()
+	else:
+		started = false
