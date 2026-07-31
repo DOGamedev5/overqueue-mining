@@ -27,8 +27,10 @@ func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("right_click") or event.is_action_pressed("click") and grabbed != null:
 		if grabbed == null:
-			grabbed = selectorArea.getOnRegion()[0].object
-			grabbed.reparent(grabNode)
+			var objects : Array = selectorArea.getOnRegion()
+			if objects.size() > 0:
+				grabbed = selectorArea.getOnRegion()[0].object
+				grabbed.reparent(grabNode)
 		else:
 			grabbed.reparent(objectsLayer)
 			grabbed = null
