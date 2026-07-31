@@ -24,17 +24,11 @@ tile_set = ExtResource("1_qm3xg")
 position = Vector2(48, -16)
 
 [node name="Interactor" parent="objects" unique_id=36085486 instance=ExtResource("3_ctujs")]
-position = Vector2(32, -16)
-
-[node name="Interactor2" parent="objects" unique_id=814598410 instance=ExtResource("3_ctujs")]
-position = Vector2(16, -16)
-
-[node name="Interactor3" parent="objects" unique_id=1237879911 instance=ExtResource("3_ctujs")]
-position = Vector2(16, 0)
-direction = 1
 
 [node name="TileSelector" parent="." unique_id=1436156362 node_paths=PackedStringArray("wallTileMap", "objectsLayer") instance=ExtResource("2_wmu6b")]
 wallTileMap = NodePath("../wall")
 objectsLayer = NodePath("../objects")
 
 [node name="Gui" parent="." unique_id=1432043895 instance=ExtResource("3_xd7vh")]
+
+[connection signal="gearBuyed" from="Gui" to="TileSelector" method="_on_gui_gear_buyed"]

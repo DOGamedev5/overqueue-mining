@@ -31,9 +31,21 @@ func _input(event: InputEvent) -> void:
 			if objects.size() > 0:
 				grabbed = selectorArea.getOnRegion()[0].object
 				grabbed.reparent(grabNode)
+				if grabbed is GameObject: grabbed.grabed = true
+				GlobalInfo.buyBlocked = true
 		else:
-			grabbed.reparent(objectsLayer)
-			grabbed = null
+			var data : TileData = wallTileMap.get_cell_tile_data(currentTilePos)
+			var objectsDetect : Array = selectorArea.getOnRegion()
+			var canPut := true
+			
+			for ob in objectsDetect:
+				if ob.object.get_parent() == objectsLayer: canPut = false
+			
+			if data == null and canPut:
+				grabbed.reparent(objectsLayer)
+				if grabbed is GameObject: grabbed.grabed = false
+				grabbed = null
+				GlobalInfo.buyBlocked = false
 
 func _process(_delta: float) -> void:
 	position = currentPos
@@ -41,12 +53,18 @@ func _process(_delta: float) -> void:
 	var data : TileData = wallTileMap.get_cell_tile_data(currentTilePos)
 	sprite.frame = 0 if data == null else 1
 	
-	if grabbed != null: sprite.frame = 2
+	if grabbed != null and data == null:
+		sprite.frame = 2
+		if grabbed is GameObject: grabbed.grabed = true
 	
 	if objectsLayer != null and grabbed == null:
 		for area in selectorArea.getOnRegion():
 			if area.object is BlockStone: sprite.frame = 3
+			elif area.object is GameObject: sprite.frame = 4
 
-	
-	
-	
+func _on_gui_gear_buyed(id: int) -> void:
+	var scene : PackedScene = load(GlobalInfo.gearsShopInfo[id].reference)
+	var instance = scene.instantiate()
+	grabbed = instance
+	grabNode.add_child(instance)
+	GlobalInfo.buyBlocked = true

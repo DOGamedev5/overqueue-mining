@@ -13,7 +13,7 @@ script = ExtResource("1_5tkqq")
 [node name="Select" type="Sprite2D" parent="." unique_id=860714460]
 z_index = 2
 texture = ExtResource("2_c3g07")
-hframes = 2
+hframes = 4
 vframes = 2
 
 [node name="grabbed" type="Node2D" parent="." unique_id=344979357]

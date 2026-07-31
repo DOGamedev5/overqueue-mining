@@ -8,26 +8,6 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k3nxe"]
 size = Vector2(16, 16)
 
-[sub_resource type="Shader" id="Shader_d7v1o"]
-resource_local_to_scene = true
-code = "shader_type canvas_item;
-
-uniform float cooldownPercent = 0;
-
-void fragment() {
-	vec4 base = COLOR;
-	float dist = distance(UV, vec2(0.5, 0.5));
-	
-	if (dist < cooldownPercent * sqrt(0.5*0.5 + 0.5*0.5)) {
-		COLOR = base + vec4(0.3, 0.3, 0.2, 0);
-	}
-}
-"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d7v1o"]
-shader = SubResource("Shader_d7v1o")
-shader_parameter/cooldownPercent = 0.0
-
 [node name="Block" type="Node2D" unique_id=914735519]
 script = ExtResource("1_hcevw")
 
@@ -47,7 +27,6 @@ shape = SubResource("RectangleShape2D_k3nxe")
 position = Vector2(8, 8)
 
 [node name="Block" type="Sprite2D" parent="pivot" unique_id=1956901413]
-material = SubResource("ShaderMaterial_d7v1o")
 texture = ExtResource("1_ihowl")
 
 [node name="cooldown" type="Timer" parent="." unique_id=880060567 node_paths=PackedStringArray("texture")]

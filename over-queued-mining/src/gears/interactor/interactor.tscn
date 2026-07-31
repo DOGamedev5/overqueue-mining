@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://mb6jq0tbx860" path="res://src/gears/interactor/interactor.png" id="2_r3f2s"]
 [ext_resource type="Script" uid="uid://vkdydfnum0c2" path="res://src/classes/interactiveArea.gd" id="3_u2oma"]
 [ext_resource type="Script" uid="uid://b05o1uwr217vr" path="res://src/classes/hitSender.gd" id="4_r3f2s"]
+[ext_resource type="Texture2D" uid="uid://cvj0apojcjx5d" path="res://src/gears/interactor/impactArea.png" id="5_732ao"]
 [ext_resource type="Script" uid="uid://bhlvgwrkobwdh" path="res://src/classes/windup.gd" id="6_732ao"]
 [ext_resource type="Script" uid="uid://chgum0ddo1r1j" path="res://src/classes/cooldown.gd" id="6_eu043"]
 
@@ -51,7 +52,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_r3f2s"]
 resource_name = "shoot"
-length = 0.39999999999999997
+length = 0.4
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -96,8 +97,6 @@ _data = {
 &"shoot": SubResource("Animation_r3f2s")
 }
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_u2oma"]
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hijj2"]
 size = Vector2(12, 12)
 
@@ -123,7 +122,6 @@ libraries/ = SubResource("AnimationLibrary_u2oma")
 position = Vector2(8, 8)
 
 [node name="Interactor" type="Sprite2D" parent="pivot" unique_id=68211666]
-material = SubResource("ShaderMaterial_u2oma")
 texture = ExtResource("2_r3f2s")
 hframes = 4
 
@@ -136,6 +134,11 @@ metadata/_custom_type_script = "uid://b05o1uwr217vr"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/HitSender" unique_id=1496286147]
 shape = SubResource("RectangleShape2D_hijj2")
+
+[node name="ImpactArea" type="Sprite2D" parent="pivot" unique_id=2115711283]
+modulate = Color(1, 1, 1, 0.73333335)
+position = Vector2(16, 0)
+texture = ExtResource("5_732ao")
 
 [node name="cooldown" type="Timer" parent="." unique_id=1343594841 node_paths=PackedStringArray("texture")]
 wait_time = 0.3

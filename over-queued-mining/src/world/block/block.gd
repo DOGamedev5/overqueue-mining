@@ -2,7 +2,7 @@ class_name BlockStone extends Node2D
 
 @onready var blockSprite := $pivot/Block
 @onready var cooldown := $cooldown
-const interpolation := 15
+const interpolation := 8
 
 func _on_hitbox_has_been_hited(hitInfo : HitData) -> void:
 	randomize()

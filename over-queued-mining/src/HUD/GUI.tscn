@@ -1,6 +1,8 @@
 [gd_scene format=3 uid="uid://cy1nh6wd2dvyk"]
 
 [ext_resource type="Script" uid="uid://unn02xepr1ba" path="res://src/HUD/gui.gd" id="1_4ljqj"]
+[ext_resource type="PackedScene" uid="uid://fsncapfaf3y4" path="res://src/HUD/button/gearBuy.tscn" id="2_fxryi"]
+[ext_resource type="Texture2D" uid="uid://mb6jq0tbx860" path="res://src/gears/interactor/interactor.png" id="3_1imlk"]
 
 [sub_resource type="Theme" id="Theme_k3nxe"]
 
@@ -29,6 +31,16 @@ outline_size = 4
 outline_color = Color(0.20018968, 0.13930744, 0.2548483, 1)
 shadow_size = 4
 shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4ljqj"]
+content_margin_top = 6.0
+bg_color = Color(0.3019608, 0.15294118, 0.22352941, 0.7607843)
+border_width_top = 4
+border_color = Color(0.14192706, 0.11550054, 0.12607116, 0.93333334)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7v1o"]
+atlas = ExtResource("3_1imlk")
+region = Rect2(0, 0, 16, 16)
 
 [node name="Gui" type="CanvasLayer" unique_id=1432043895]
 script = ExtResource("1_4ljqj")
@@ -67,9 +79,34 @@ size_flags_vertical = 8
 text = "Points: 0"
 label_settings = SubResource("LabelSettings_silce")
 
-[node name="Label" type="Label" parent="Control/VBoxContainer" unique_id=1398272142]
+[node name="info" type="Label" parent="Control/VBoxContainer" unique_id=1398272142]
 layout_mode = 2
 size_flags_vertical = 8
 text = "Infor Test"
 label_settings = SubResource("LabelSettings_k3nxe")
 horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="shop" type="VBoxContainer" parent="." unique_id=1867855280]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="shop" unique_id=1637093125]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_4ljqj")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="shop/PanelContainer" unique_id=1001526835]
+layout_mode = 2
+alignment = 1
+
+[node name="GearBuy" parent="shop/PanelContainer/HBoxContainer" unique_id=1160169962 instance=ExtResource("2_fxryi")]
+layout_mode = 2
+gearTexture = SubResource("AtlasTexture_d7v1o")
+
+[connection signal="buyed" from="shop/PanelContainer/HBoxContainer/GearBuy" to="." method="_on_gear_buy_buyed"]
