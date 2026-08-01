@@ -87,26 +87,27 @@ label_settings = SubResource("LabelSettings_k3nxe")
 horizontal_alignment = 1
 autowrap_mode = 2
 
-[node name="shop" type="VBoxContainer" parent="." unique_id=1867855280]
+[node name="shop" type="PanelContainer" parent="." unique_id=1637093125]
 visible = false
-anchors_preset = 15
+custom_maximum_size = Vector2(-1, 80)
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -70.0
 grow_horizontal = 2
-grow_vertical = 2
-alignment = 2
-
-[node name="PanelContainer" type="PanelContainer" parent="shop" unique_id=1637093125]
-custom_minimum_size = Vector2(0, 80)
-layout_mode = 2
+grow_vertical = 0
+scale = Vector2(1, 1e-05)
+pivot_offset = Vector2(0, 80)
+size_flags_vertical = 8
 theme_override_styles/panel = SubResource("StyleBoxFlat_4ljqj")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="shop/PanelContainer" unique_id=1001526835]
+[node name="HBoxContainer" type="HBoxContainer" parent="shop" unique_id=1001526835]
 layout_mode = 2
 alignment = 1
 
-[node name="GearBuy" parent="shop/PanelContainer/HBoxContainer" unique_id=1160169962 instance=ExtResource("2_fxryi")]
+[node name="GearBuy" parent="shop/HBoxContainer" unique_id=1160169962 instance=ExtResource("2_fxryi")]
 layout_mode = 2
 gearTexture = SubResource("AtlasTexture_d7v1o")
 
-[connection signal="buyed" from="shop/PanelContainer/HBoxContainer/GearBuy" to="." method="_on_gear_buy_buyed"]
+[connection signal="buyed" from="shop/HBoxContainer/GearBuy" to="." method="_on_gear_buy_buyed"]

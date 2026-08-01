@@ -5,29 +5,54 @@ extends CanvasLayer
 @onready var shop := $shop
 
 @onready var tutorial := 0
+@onready var tutorialTimer := -1.0
 
 signal gearBuyed(id : int)
 
+@onready var shopShowing := false
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
+func _process(delta: float) -> void:
 	points.text = "Points: {0}".format([GlobalInfo.points])
 	if tutorial == 0:
 		info.text = "Click on the block to obtain points. {0}/4".format([GlobalInfo.points])
 		if GlobalInfo.points >= 4: tutorial = 1
 	
 	if tutorial == 1:  info.text = "Buy a interactor on Shop menu(press E)."
-	if tutorial == 2: 
+	elif tutorial == 2: 
 		info.text = "Put the interactor that you buyed by the side of the block.\n(Left or Right click)"
 		if not GlobalInfo.buyBlocked: tutorial = 3
-	if tutorial == 3:
+	elif tutorial == 3:
 		info.text = "Left click on the interactor,\nthe more complex the reaction chain, the more points you earn!"
-
+		tutorialTimer = 9.0
+		tutorial = 4
+	elif tutorial == 4:
+		tutorialTimer -= delta
+		if tutorialTimer <= 0:
+			info.text = ""
+			info.visible = false
+			tutorial = -1
+		
+		
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("shop"):
-		shop.visible = !shop.visible
-		pass
+		shopShowing = !shopShowing
+		_animate_shop()
+			
 
 func _on_gear_buy_buyed(id: int) -> void:
 	gearBuyed.emit(id)
-	shop.visible = false
+	shopShowing = false
+	_animate_shop()
 	if tutorial == 1: tutorial = 2
+
+func _animate_shop():
+	if shopShowing: shop.visible = true
+	var targetScale := 1 if shopShowing else 0
+	
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(shop, "scale", Vector2(1, targetScale), 0.1).set_ease(Tween.EASE_OUT if shopShowing else Tween.EASE_IN)
+	await tween.finished
+	if not shopShowing: shop.visible = false
+	

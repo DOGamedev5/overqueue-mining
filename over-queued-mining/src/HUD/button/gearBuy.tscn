@@ -9,15 +9,15 @@ atlas = ExtResource("1_4p4vc")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_k3nxe"]
-font_size = 12
+font_size = 8
 outline_size = 4
 outline_color = Color(0.10928835, 0.106338516, 0.13151044, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_hijj2"]
-font_size = 12
-font_color = Color(0.6770986, 0.93359375, 0.91555893, 1)
+font_size = 10
+font_color = Color(0.98391724, 1, 0.31380206, 1)
 outline_size = 3
-outline_color = Color(0.09019607, 0.20223653, 0.29803923, 1)
+outline_color = Color(0.6106771, 0.23758285, 0.17254809, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_k3nxe"]
 atlas = ExtResource("3_fm6xb")
@@ -63,7 +63,7 @@ horizontal_alignment = 1
 
 [node name="value" type="Label" parent="MarginContainer/VBoxContainer" unique_id=486177917]
 layout_mode = 2
-text = "12"
+text = "112.5mk"
 label_settings = SubResource("LabelSettings_hijj2")
 horizontal_alignment = 1
 
