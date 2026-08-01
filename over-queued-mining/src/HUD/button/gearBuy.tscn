@@ -3,25 +3,28 @@
 [ext_resource type="Script" uid="uid://bacu433g4il7p" path="res://src/HUD/button/GearBuyButton.gd" id="1_2g2gb"]
 [ext_resource type="Texture2D" uid="uid://mb6jq0tbx860" path="res://src/gears/interactor/interactor.png" id="1_4p4vc"]
 [ext_resource type="Texture2D" uid="uid://b24dyj7jufybo" path="res://src/HUD/button/selection.png" id="3_fm6xb"]
+[ext_resource type="FontFile" uid="uid://parivl3t7lr0" path="res://src/HUD/fonts/Font.ttf" id="3_msk7y"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3nxe"]
+atlas = ExtResource("3_fm6xb")
+region = Rect2(0, 0, 64, 10)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fm6xb"]
 atlas = ExtResource("1_4p4vc")
 region = Rect2(0, 0, 16, 16)
 
 [sub_resource type="LabelSettings" id="LabelSettings_k3nxe"]
-font_size = 8
-outline_size = 4
+font = ExtResource("3_msk7y")
+font_size = 13
+outline_size = 2
 outline_color = Color(0.10928835, 0.106338516, 0.13151044, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_hijj2"]
-font_size = 10
+font = ExtResource("3_msk7y")
+font_size = 13
 font_color = Color(0.98391724, 1, 0.31380206, 1)
-outline_size = 3
+outline_size = 2
 outline_color = Color(0.6106771, 0.23758285, 0.17254809, 1)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k3nxe"]
-atlas = ExtResource("3_fm6xb")
-region = Rect2(0, 0, 64, 80)
 
 [node name="GearBuy" type="Button" unique_id=1160169962]
 custom_minimum_size = Vector2(64, 64)
@@ -46,7 +49,11 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=56079498]
 layout_mode = 2
 theme_override_constants/separation = 0
-alignment = 2
+alignment = 1
+
+[node name="overlay" type="TextureRect" parent="MarginContainer/VBoxContainer" unique_id=1334195619]
+layout_mode = 2
+texture = SubResource("AtlasTexture_k3nxe")
 
 [node name="TextureRect" type="TextureRect" parent="MarginContainer/VBoxContainer" unique_id=1624380381]
 custom_minimum_size = Vector2(32, 32)
@@ -66,10 +73,5 @@ layout_mode = 2
 text = "112.5mk"
 label_settings = SubResource("LabelSettings_hijj2")
 horizontal_alignment = 1
-
-[node name="overlay" type="TextureRect" parent="MarginContainer" unique_id=1334195619]
-visible = false
-layout_mode = 2
-texture = SubResource("AtlasTexture_k3nxe")
 
 [connection signal="pressed" from="." to="." method="_on_pressed"]

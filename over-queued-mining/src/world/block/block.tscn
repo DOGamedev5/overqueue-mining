@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dgnubr2mabtkr" path="res://src/world/block/block.png" id="1_ihowl"]
 [ext_resource type="Script" uid="uid://vkdydfnum0c2" path="res://src/classes/interactiveArea.gd" id="2_h1b2h"]
 [ext_resource type="Script" uid="uid://chgum0ddo1r1j" path="res://src/classes/cooldown.gd" id="5_8osg2"]
+[ext_resource type="PackedScene" uid="uid://xs1bik00f38j" path="res://src/HUD/life.tscn" id="5_75fji"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_k3nxe"]
 size = Vector2(16, 16)
@@ -30,10 +31,18 @@ position = Vector2(8, 8)
 texture = ExtResource("1_ihowl")
 
 [node name="cooldown" type="Timer" parent="." unique_id=880060567 node_paths=PackedStringArray("texture")]
-wait_time = 0.6
+wait_time = 0.5
 one_shot = true
 script = ExtResource("5_8osg2")
 texture = NodePath("../pivot/Block")
 metadata/_custom_type_script = "uid://chgum0ddo1r1j"
+
+[node name="barr" parent="." unique_id=82930962 instance=ExtResource("5_75fji")]
+z_index = 1
+offset_left = 0.0
+offset_top = -5.0
+offset_right = 16.0
+offset_bottom = -2.0
+step = 0.0
 
 [connection signal="hasBeenHited" from="hitbox" to="." method="_on_hitbox_has_been_hited"]

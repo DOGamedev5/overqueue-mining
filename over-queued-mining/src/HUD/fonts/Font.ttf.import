@@ -1,0 +1,43 @@
+[remap]
+
+importer="font_data_dynamic"
+type="FontFile"
+uid="uid://parivl3t7lr0"
+path="res://.godot/imported/Font.ttf-0a10addfe95558c97dfa5f4bcaf5c760.fontdata"
+
+[deps]
+
+source_file="res://src/HUD/fonts/Font.ttf"
+dest_files=["res://.godot/imported/Font.ttf-0a10addfe95558c97dfa5f4bcaf5c760.fontdata"]
+
+[params]
+
+Rendering=null
+antialiasing=0
+generate_mipmaps=false
+disable_embedded_bitmaps=true
+multichannel_signed_distance_field=false
+msdf_pixel_range=8
+msdf_size=48
+allow_system_fallback=false
+force_autohinter=false
+modulate_color_glyphs=false
+hinting=0
+subpixel_positioning=0
+keep_rounding_remainders=false
+oversampling=0.0
+Fallbacks=null
+fallbacks=[]
+Compress=null
+compress=false
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "Nova Configuração",
+&"size": Vector2i(13, 0),
+&"variation_embolden": 0.0,
+&"variation_face_index": 2
+}]
+language_support={}
+script_support={}
+opentype_features={}

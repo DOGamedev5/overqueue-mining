@@ -3,13 +3,8 @@ extends Node
 @onready var points := 0
 @onready var message_queue : Array[String] = []
 
-@onready var gearsShopInfo := [
-	{
-		name = "Interactor",
-		price = 4,
-		description = "Increases +1 points of the reaction chain.",
-		reference = "uid://btqinqnbprfud"
-	}
+@onready var gearsShopInfo : Array[GearInfo] = [
+	preload("res://src/register/gears/info/interactor.tres")
 ]
 
 @export var buyBlocked := false

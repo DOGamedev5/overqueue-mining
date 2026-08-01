@@ -6,13 +6,14 @@ extends Button
 @onready var texture := $MarginContainer/VBoxContainer/TextureRect
 @onready var nameLabel := $MarginContainer/VBoxContainer/Label
 @onready var priceLabel := $MarginContainer/VBoxContainer/value
+@onready var overlay := $MarginContainer/VBoxContainer/overlay
 
 signal buyed(id : int)
 
 func _ready() -> void:
 	texture.texture = gearTexture
 	if GlobalInfo.gearsShopInfo.size() > infoID:
-		nameLabel.text = GlobalInfo.gearsShopInfo[infoID].name
+		nameLabel.text = GlobalInfo.gearsShopInfo[infoID].propertiesReference.gearName
 		priceLabel.text = str(GlobalInfo.gearsShopInfo[infoID].price)
 
 func _process(_delta : float):
@@ -21,8 +22,16 @@ func _process(_delta : float):
 			modulate = Color(0.68, 0.58, 0.7)
 		else:
 			modulate = Color(1, 1, 1)
+	
+	overlay.modulate.a = 1 if is_hovered() else 0
 
 func _on_pressed() -> void:
 	if GlobalInfo.gearsShopInfo.size() > infoID:
 		var price : int = GlobalInfo.gearsShopInfo[infoID].price
 		if GlobalInfo.tryToBuy(price): buyed.emit(infoID)
+
+func getProperties() -> GearProperties:
+	if GlobalInfo.gearsShopInfo.size() > infoID:
+		return GlobalInfo.gearsShopInfo[infoID].propertiesReference
+	
+	return null

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GearProperties" format=3 uid="uid://c1u7mkj4aaap"]
+
+[ext_resource type="Script" uid="uid://cwylm24g7uyii" path="res://src/classes/gearProperties.gd" id="1_ygrn1"]
+
+[resource]
+script = ExtResource("1_ygrn1")
+strength = 2.5
+resistence = 1.0
+strengthLoss = 0.5
+gearName = "Interactor"
+metadata/_custom_type_script = "uid://cwylm24g7uyii"

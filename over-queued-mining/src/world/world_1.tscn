@@ -2,7 +2,6 @@
 
 [ext_resource type="TileSet" uid="uid://detfhoyfd8n4v" path="res://src/tilesets/tileset1.tres" id="1_qm3xg"]
 [ext_resource type="PackedScene" uid="uid://m43e5bi10n1u" path="res://src/tileselector/tile_selector.tscn" id="2_wmu6b"]
-[ext_resource type="PackedScene" uid="uid://btqinqnbprfud" path="res://src/gears/interactor/interactor.tscn" id="3_ctujs"]
 [ext_resource type="PackedScene" uid="uid://bhpmwrveuo3yj" path="res://src/world/block/block.tscn" id="3_ppv74"]
 [ext_resource type="PackedScene" uid="uid://cy1nh6wd2dvyk" path="res://src/HUD/GUI.tscn" id="3_xd7vh"]
 
@@ -21,14 +20,79 @@ tile_set = ExtResource("1_qm3xg")
 [node name="objects" type="Node2D" parent="." unique_id=1565751475]
 
 [node name="Block" parent="objects" unique_id=914735519 instance=ExtResource("3_ppv74")]
-position = Vector2(48, -16)
+position = Vector2(112, -32)
 
-[node name="Interactor" parent="objects" unique_id=36085486 instance=ExtResource("3_ctujs")]
+[node name="Block2" parent="objects" unique_id=1056185508 instance=ExtResource("3_ppv74")]
+position = Vector2(128, -32)
+
+[node name="Block3" parent="objects" unique_id=1260083646 instance=ExtResource("3_ppv74")]
+position = Vector2(112, -16)
+
+[node name="Block4" parent="objects" unique_id=1821405894 instance=ExtResource("3_ppv74")]
+position = Vector2(128, -16)
+
+[node name="Block5" parent="objects" unique_id=1310013343 instance=ExtResource("3_ppv74")]
+position = Vector2(80, 64)
+
+[node name="Block9" parent="objects" unique_id=767942755 instance=ExtResource("3_ppv74")]
+position = Vector2(128, -48)
+
+[node name="Block10" parent="objects" unique_id=403890310 instance=ExtResource("3_ppv74")]
+position = Vector2(112, -96)
+
+[node name="Block11" parent="objects" unique_id=1363873882 instance=ExtResource("3_ppv74")]
+position = Vector2(80, -112)
+
+[node name="Block12" parent="objects" unique_id=454020100 instance=ExtResource("3_ppv74")]
+position = Vector2(-16, -80)
+
+[node name="Block13" parent="objects" unique_id=185925758 instance=ExtResource("3_ppv74")]
+position = Vector2(0, -80)
+
+[node name="Block14" parent="objects" unique_id=1757308411 instance=ExtResource("3_ppv74")]
+position = Vector2(-32, 0)
+
+[node name="Block15" parent="objects" unique_id=593299770 instance=ExtResource("3_ppv74")]
+position = Vector2(-48, 0)
+
+[node name="Block16" parent="objects" unique_id=552526012 instance=ExtResource("3_ppv74")]
+position = Vector2(-64, 0)
+
+[node name="Block17" parent="objects" unique_id=4649272 instance=ExtResource("3_ppv74")]
+position = Vector2(-64, 16)
+
+[node name="Block18" parent="objects" unique_id=830264170 instance=ExtResource("3_ppv74")]
+position = Vector2(-80, 16)
+
+[node name="Block19" parent="objects" unique_id=1122039234 instance=ExtResource("3_ppv74")]
+position = Vector2(48, 96)
+
+[node name="Block20" parent="objects" unique_id=273075817 instance=ExtResource("3_ppv74")]
+position = Vector2(48, 80)
+
+[node name="Block21" parent="objects" unique_id=1735715346 instance=ExtResource("3_ppv74")]
+position = Vector2(32, 80)
+
+[node name="Block22" parent="objects" unique_id=67448865 instance=ExtResource("3_ppv74")]
+position = Vector2(16, 64)
+
+[node name="Block23" parent="objects" unique_id=1172081397 instance=ExtResource("3_ppv74")]
+position = Vector2(-96, 80)
+
+[node name="Block6" parent="objects" unique_id=1936117024 instance=ExtResource("3_ppv74")]
+position = Vector2(96, 0)
+
+[node name="Block7" parent="objects" unique_id=1820380263 instance=ExtResource("3_ppv74")]
+position = Vector2(112, 0)
+
+[node name="Block8" parent="objects" unique_id=860578586 instance=ExtResource("3_ppv74")]
+position = Vector2(128, 0)
 
 [node name="TileSelector" parent="." unique_id=1436156362 node_paths=PackedStringArray("wallTileMap", "objectsLayer") instance=ExtResource("2_wmu6b")]
 wallTileMap = NodePath("../wall")
 objectsLayer = NodePath("../objects")
 
-[node name="Gui" parent="." unique_id=1432043895 instance=ExtResource("3_xd7vh")]
+[node name="Gui" parent="." unique_id=1432043895 node_paths=PackedStringArray("tile_selector") instance=ExtResource("3_xd7vh")]
+tile_selector = NodePath("../TileSelector")
 
 [connection signal="gearBuyed" from="Gui" to="TileSelector" method="_on_gui_gear_buyed"]

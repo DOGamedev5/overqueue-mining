@@ -5,12 +5,15 @@ extends Node2D
 @onready var currentPos := Vector2i(8, 8)
 @onready var currentTilePos := Vector2i(0, 0)
 @onready var sprite := $Select
-@onready var selectorArea := $Area2D
+@onready var selectorArea : HitSender = $Area2D
 
-@onready var clickHitData : HitData = HitData.new(1)
+@onready var clickHitData : HitData = HitData.new(1, false, true)
 
 @onready var grabbed : Node2D = null
 @onready var grabNode := $grabbed
+
+@onready var leftTextInfo := $Control/hbox/left
+@onready var rightTextInfo := $Control/hbox/right
 
 func _input(event: InputEvent) -> void:
 	var posUnhandled = get_global_mouse_position()
@@ -23,24 +26,23 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("click") and grabbed == null:selectorArea.sendHit(clickHitData)
 	if grabbed is GameObject:
 		if event.is_action_pressed("rotate_up"): grabbed.rotationInputUp()
-		if event.is_action_pressed("roate_down"): grabbed.rotationInputDown()
+		elif event.is_action_pressed("roate_down"): grabbed.rotationInputDown()
 	
 	if event.is_action_pressed("right_click") or event.is_action_pressed("click") and grabbed != null:
 		if grabbed == null:
 			var objects : Array = selectorArea.getOnRegion()
 			if objects.size() > 0:
-				grabbed = selectorArea.getOnRegion()[0].object
-				grabbed.reparent(grabNode)
-				if grabbed is GameObject: grabbed.grabed = true
-				GlobalInfo.buyBlocked = true
+				var object = selectorArea.getOnRegion()[0].object
+				if not object is BlockStone:
+					grabbed = object
+					grabbed.reparent(grabNode)
+					if grabbed is GameObject: grabbed.grabed = true
+					GlobalInfo.buyBlocked = true
 		else:
 			var data : TileData = wallTileMap.get_cell_tile_data(currentTilePos)
-			var objectsDetect : Array = selectorArea.getOnRegion()
-			var canPut := true
-			
-			for ob in objectsDetect:
-				if ob.object.get_parent() == objectsLayer: canPut = false
-			
+			var objectsDetect := selectorArea.getOnRegionOnChildrenOf(objectsLayer)
+			var canPut := objectsDetect.size() == 0
+
 			if data == null and canPut:
 				grabbed.reparent(objectsLayer)
 				if grabbed is GameObject: grabbed.grabed = false
@@ -57,14 +59,36 @@ func _process(_delta: float) -> void:
 		sprite.frame = 2
 		if grabbed is GameObject: grabbed.grabed = true
 	
-	if objectsLayer != null and grabbed == null:
-		for area in selectorArea.getOnRegion():
-			if area.object is BlockStone: sprite.frame = 3
-			elif area.object is GameObject: sprite.frame = 4
+	if objectsLayer != null:
+		var selection := selectorArea.getOnRegionOnChildrenOf(objectsLayer)
+		if grabbed != null and selection.size() > 0:
+			sprite.frame = 1
+		else: 
+			for area in selection:
+				if area.object is BlockStone: sprite.frame = 3
+				elif area.object is GameObject: sprite.frame = 4
+	
+	_text_info_setup()
 
 func _on_gui_gear_buyed(id: int) -> void:
-	var scene : PackedScene = load(GlobalInfo.gearsShopInfo[id].reference)
+	var scene : PackedScene = GlobalInfo.gearsShopInfo[id].sceneReference
 	var instance = scene.instantiate()
 	grabbed = instance
 	grabNode.add_child(instance)
 	GlobalInfo.buyBlocked = true
+
+func _text_info_setup():
+	var textLeft := ""
+	var textRight := ""
+	if grabbed != null and grabbed is GameObject:
+		textRight += "R/Wheel: Rotate\n"
+		textRight += "Click (any): Place\n"
+		pass
+	
+	leftTextInfo.text = textLeft
+	rightTextInfo.text = textRight
+	
+func getFirstOfSelectionInObjects():
+	var objects : Array = selectorArea.getOnRegionOnChildrenOf(objectsLayer)
+	if objects.size() > 0:
+		return selectorArea.getOnRegion()[0].object

@@ -1,8 +1,12 @@
 extends CanvasLayer
 
-@onready var points := $Control/VBoxContainer/HBoxContainer/panel/VBoxContainer/Coins
+@onready var points := $Control/HBoxContainer/panel/VBoxContainer/Coins
 @onready var info := $Control/VBoxContainer/info
+@onready var space := $Control/VBoxContainer/space
 @onready var shop := $shop
+@onready var shopOptions := $shop/HBoxContainer
+@onready var selectionInfoPanel := $Control/VBoxContainer/hbox/PanelContainer
+@onready var selectionInfoText := $Control/VBoxContainer/hbox/PanelContainer/RichTextLabel
 
 @onready var tutorial := 0
 @onready var tutorialTimer := -1.0
@@ -11,9 +15,67 @@ signal gearBuyed(id : int)
 
 @onready var shopShowing := false
 
+@export var tile_selector : Node2D
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	points.text = "Points: {0}".format([GlobalInfo.points])
+	
+	space.custom_minimum_size.y = shop.scale.y * 70+8
+	
+	tutorialThingy(delta)
+	
+	var text := ""
+	var properties : GearProperties = null
+	if tile_selector.grabbed != null and tile_selector.grabbed is GearClass:
+		properties = tile_selector.grabbed.properties
+	else:
+		for item in shopOptions.get_children():
+			if item.is_hovered():
+				properties = item.getProperties()
+				break
+	
+	if properties == null:
+		for obj in tile_selector.selectorArea.getOnRegionOnChildrenOf(tile_selector.objectsLayer):
+			if obj is InteractiveArea and obj.object is GearClass:
+				properties = obj.object.properties
+				break
+	
+	if properties != null:
+		text += "NAME: {0}\nStrength: {1}\nReaction_lost: {2}\nResistence: {3}".format([properties.gearName, properties.strength, properties.strengthLoss, properties.resistence])
+		
+	selectionInfoText.text = text
+	selectionInfoPanel.visible = text != ""
+	
+	
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("shop"):
+		shopShowing = !shopShowing
+		_animate_shop()
+			
+
+func _on_gear_buy_buyed(id: int) -> void:
+	gearBuyed.emit(id)
+	shopShowing = false
+	_animate_shop()
+	if tutorial == 1: tutorial = 2
+
+func _animate_shop():
+	if shopShowing:
+		shop.visible = true
+		space.visible = true
+		
+	var targetScale := 1 if shopShowing else 0
+	
+	var tween := create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(shop, "scale", Vector2(1, targetScale), 0.1).set_ease(Tween.EASE_OUT if shopShowing else Tween.EASE_IN)
+	await tween.finished
+	if not shopShowing:
+		shop.visible = false
+		#space.visible = false
+
+func tutorialThingy(delta : float):
 	if tutorial == 0:
 		info.text = "Click on the block to obtain points. {0}/4".format([GlobalInfo.points])
 		if GlobalInfo.points >= 4: tutorial = 1
@@ -32,27 +94,3 @@ func _process(delta: float) -> void:
 			info.text = ""
 			info.visible = false
 			tutorial = -1
-		
-		
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("shop"):
-		shopShowing = !shopShowing
-		_animate_shop()
-			
-
-func _on_gear_buy_buyed(id: int) -> void:
-	gearBuyed.emit(id)
-	shopShowing = false
-	_animate_shop()
-	if tutorial == 1: tutorial = 2
-
-func _animate_shop():
-	if shopShowing: shop.visible = true
-	var targetScale := 1 if shopShowing else 0
-	
-	var tween := create_tween()
-	tween.set_trans(Tween.TRANS_QUAD)
-	tween.tween_property(shop, "scale", Vector2(1, targetScale), 0.1).set_ease(Tween.EASE_OUT if shopShowing else Tween.EASE_IN)
-	await tween.finished
-	if not shopShowing: shop.visible = false
-	

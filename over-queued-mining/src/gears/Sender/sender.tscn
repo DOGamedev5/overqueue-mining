@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://cyubnt7f1ahs"]
+
+[ext_resource type="Script" uid="uid://bc0yt57prwtt0" path="res://src/classes/gearClass.gd" id="1_r1dbm"]
+[ext_resource type="Texture2D" uid="uid://54q4205s8ruv" path="res://src/gears/Sender/sender.png" id="2_t80o2"]
+[ext_resource type="Texture2D" uid="uid://cvj0apojcjx5d" path="res://src/gears/interactor/impactArea.png" id="3_spc2t"]
+
+[sub_resource type="Animation" id="Animation_m23kl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sender:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ujit5"]
+resource_name = "shoot"
+length = 0.39999999999999997
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("pivot/Sender:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.100000024, 0.20000005, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("pivot:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(3.3635864, 0.59460366, 0.6372803, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(0.9, 0.9), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_50fvi"]
+_data = {
+&"RESET": SubResource("Animation_m23kl"),
+&"shoot": SubResource("Animation_ujit5")
+}
+
+[node name="Sender" type="Node2D" unique_id=1321309035]
+script = ExtResource("1_r1dbm")
+metadata/_custom_type_script = "uid://bc0yt57prwtt0"
+
+[node name="pivot" type="Node2D" parent="." unique_id=1827724071]
+position = Vector2(8, 8)
+
+[node name="Sender" type="Sprite2D" parent="pivot" unique_id=1506245039]
+position = Vector2(16, 0)
+texture = ExtResource("2_t80o2")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1123179107]
+libraries/ = SubResource("AnimationLibrary_50fvi")
+
+[node name="ImpactArea" type="Sprite2D" parent="." unique_id=1837145903]
+position = Vector2(40, 8)
+texture = ExtResource("3_spc2t")

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://btqinqnbprfud"]
 
 [ext_resource type="Script" uid="uid://ceq50kc420va0" path="res://src/gears/interactor/interactor.gd" id="1_uvi5m"]
+[ext_resource type="Resource" uid="uid://c1u7mkj4aaap" path="res://src/register/gears/properties/interactor.tres" id="2_ffaut"]
 [ext_resource type="Texture2D" uid="uid://mb6jq0tbx860" path="res://src/gears/interactor/interactor.png" id="2_r3f2s"]
 [ext_resource type="Script" uid="uid://vkdydfnum0c2" path="res://src/classes/interactiveArea.gd" id="3_u2oma"]
 [ext_resource type="Script" uid="uid://b05o1uwr217vr" path="res://src/classes/hitSender.gd" id="4_r3f2s"]
@@ -100,8 +101,11 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hijj2"]
 size = Vector2(12, 12)
 
-[node name="Interactor" type="Node2D" unique_id=36085486]
+[node name="Interactor" type="Node2D" unique_id=36085486 node_paths=PackedStringArray("spritePivot", "impactVisual")]
 script = ExtResource("1_uvi5m")
+properties = ExtResource("2_ffaut")
+spritePivot = NodePath("pivot")
+impactVisual = NodePath("pivot/ImpactArea")
 
 [node name="InteractiveArea" type="Area2D" parent="." unique_id=1725366710 node_paths=PackedStringArray("object", "cooldown")]
 collision_layer = 2
@@ -141,13 +145,13 @@ position = Vector2(16, 0)
 texture = ExtResource("5_732ao")
 
 [node name="cooldown" type="Timer" parent="." unique_id=1343594841 node_paths=PackedStringArray("texture")]
-wait_time = 0.3
+wait_time = 0.35
 one_shot = true
 script = ExtResource("6_eu043")
 texture = NodePath("../pivot/Interactor")
 
 [node name="windup" type="Timer" parent="." unique_id=955034698]
-wait_time = 0.25
+wait_time = 0.275
 one_shot = true
 script = ExtResource("6_732ao")
 
