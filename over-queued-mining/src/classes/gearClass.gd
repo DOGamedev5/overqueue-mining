@@ -14,6 +14,11 @@ enum DIR {
 
 @export var direction : int = DIR.RIGHT
 
+@onready var lastInteractionInfo = {
+	"received" : 0,
+	"sended" : 0
+}
+
 func _ready() -> void: rotateDirection(direction)
 
 func _process(_delta : float) -> void:
@@ -46,9 +51,16 @@ func handleHitInfo(hitInfo : HitData) -> HitData:
 	if hitInfo.isSource:
 		newHit.setCurrentStrength(properties.strength)
 	elif hitInfo.strength < properties.resistence:
-		return null
+		newHit.setCurrentStrength(0)
 	else:
 		newHit.setCurrentStrength(hitInfo.strength)
 		newHit.addStrength(-properties.strengthLoss)
+	
+	if not hitInfo.isSource:
+		lastInteractionInfo["received"] = hitInfo.strength
+	else:
+		lastInteractionInfo["received"] = "Mouse"
+		
+	lastInteractionInfo["sended"] = newHit.strength
 	
 	return newHit

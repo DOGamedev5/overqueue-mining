@@ -4,7 +4,8 @@ extends Node
 @onready var message_queue : Array[String] = []
 
 @onready var gearsShopInfo : Array[GearInfo] = [
-	preload("res://src/register/gears/info/interactor.tres")
+	preload("res://src/register/gears/info/interactor.tres"),
+	preload("res://src/register/gears/info/sender.tres"),
 ]
 
 @export var buyBlocked := false

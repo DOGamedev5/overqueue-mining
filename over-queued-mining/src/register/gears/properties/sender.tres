@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="GearProperties" format=3 uid="uid://b7to01phdf52f"]
+
+[ext_resource type="Script" uid="uid://cwylm24g7uyii" path="res://src/classes/gearProperties.gd" id="1_ypfwq"]
+
+[resource]
+script = ExtResource("1_ypfwq")
+strength = 40
+strengthLoss = 5
+gearName = "Sender"
+sellValue = 15
+metadata/_custom_type_script = "uid://cwylm24g7uyii"

@@ -7,13 +7,14 @@ extends Node2D
 @onready var sprite := $Select
 @onready var selectorArea : HitSender = $Area2D
 
-@onready var clickHitData : HitData = HitData.new(1, false, true)
+@onready var clickHitData : HitData = HitData.new(8, false, true)
 
 @onready var grabbed : Node2D = null
 @onready var grabNode := $grabbed
 
-@onready var leftTextInfo := $Control/hbox/left
-@onready var rightTextInfo := $Control/hbox/right
+#@onready var leftTextInfo := $Control/hbox/left
+#@onready var rightTextInfo := $Control/hbox/right
+@onready var rightTextInfo := $Control/right
 
 func _input(event: InputEvent) -> void:
 	var posUnhandled = get_global_mouse_position()
@@ -78,14 +79,14 @@ func _on_gui_gear_buyed(id: int) -> void:
 	GlobalInfo.buyBlocked = true
 
 func _text_info_setup():
-	var textLeft := ""
 	var textRight := ""
 	if grabbed != null and grabbed is GameObject:
 		textRight += "R/Wheel: Rotate\n"
 		textRight += "Click (any): Place\n"
-		pass
+		if grabbed is GearClass:
+			textRight += "F: Sell for '{0}' Points".format([str(grabbed.properties.sellValue)])
 	
-	leftTextInfo.text = textLeft
+
 	rightTextInfo.text = textRight
 	
 func getFirstOfSelectionInObjects():

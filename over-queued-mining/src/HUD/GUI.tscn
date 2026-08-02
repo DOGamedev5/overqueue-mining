@@ -4,6 +4,7 @@
 [ext_resource type="FontFile" uid="uid://parivl3t7lr0" path="res://src/HUD/fonts/Font.ttf" id="2_dfwlw"]
 [ext_resource type="PackedScene" uid="uid://fsncapfaf3y4" path="res://src/HUD/button/gearBuy.tscn" id="2_fxryi"]
 [ext_resource type="Texture2D" uid="uid://mb6jq0tbx860" path="res://src/gears/interactor/interactor.png" id="3_1imlk"]
+[ext_resource type="Texture2D" uid="uid://dlvuomsaybrm5" path="res://src/gears/Sender/sender.png" id="5_77viu"]
 
 [sub_resource type="Theme" id="Theme_k3nxe"]
 
@@ -12,7 +13,7 @@ content_margin_left = 8.0
 content_margin_top = 8.0
 content_margin_right = 8.0
 content_margin_bottom = 8.0
-bg_color = Color(0, 0, 0, 0.27450982)
+bg_color = Color(0, 0, 0, 0.5686275)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
@@ -26,6 +27,12 @@ outline_size = 4
 outline_color = Color(0.20018968, 0.13930744, 0.2548483, 1)
 shadow_size = 4
 shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_hijj2"]
+line_spacing = 0.0
+font = ExtResource("2_dfwlw")
+font_size = 13
+font_color = Color(0.72612506, 0.6783854, 1, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_k3nxe"]
 font = ExtResource("2_dfwlw")
@@ -44,6 +51,10 @@ border_color = Color(0.14192706, 0.11550054, 0.12607116, 0.93333334)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d7v1o"]
 atlas = ExtResource("3_1imlk")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bjr7x"]
+atlas = ExtResource("5_77viu")
 region = Rect2(0, 0, 16, 16)
 
 [node name="Gui" type="CanvasLayer" unique_id=1432043895]
@@ -87,13 +98,44 @@ size_flags_vertical = 8
 [node name="hbox" type="HBoxContainer" parent="Control/VBoxContainer" unique_id=549546309]
 layout_mode = 2
 
-[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/hbox" unique_id=2146598738]
-custom_minimum_size = Vector2(144, -1)
+[node name="vbox" type="VBoxContainer" parent="Control/VBoxContainer/hbox" unique_id=418779461]
+layout_mode = 2
+size_flags_horizontal = 10
+alignment = 2
+
+[node name="selectionInformation" type="PanelContainer" parent="Control/VBoxContainer/hbox/vbox" unique_id=1638032443]
+custom_minimum_size = Vector2(160, -1)
 layout_mode = 2
 size_flags_horizontal = 10
 theme_override_styles/panel = SubResource("StyleBoxFlat_k3nxe")
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Control/VBoxContainer/hbox/PanelContainer" unique_id=1663430614]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/VBoxContainer/hbox/vbox/selectionInformation" unique_id=1758922945]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Control/VBoxContainer/hbox/vbox/selectionInformation/VBoxContainer" unique_id=645503122]
+layout_mode = 2
+text = "Last interaction data:"
+label_settings = SubResource("LabelSettings_hijj2")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/VBoxContainer/hbox/vbox/selectionInformation/VBoxContainer" unique_id=1046504792]
+clip_contents = false
+layout_mode = 2
+theme_override_fonts/normal_font = ExtResource("2_dfwlw")
+text = "last_interaction_info:
+strength_received:
+strength_sended:
+"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 3
+
+[node name="PanelContainer" type="PanelContainer" parent="Control/VBoxContainer/hbox/vbox" unique_id=2146598738]
+custom_minimum_size = Vector2(160, -1)
+layout_mode = 2
+size_flags_horizontal = 10
+theme_override_styles/panel = SubResource("StyleBoxFlat_k3nxe")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/VBoxContainer/hbox/vbox/PanelContainer" unique_id=1663430614]
 clip_contents = false
 layout_mode = 2
 theme_override_fonts/normal_font = ExtResource("2_dfwlw")
@@ -141,4 +183,10 @@ alignment = 1
 layout_mode = 2
 gearTexture = SubResource("AtlasTexture_d7v1o")
 
+[node name="GearBuy2" parent="shop/HBoxContainer" unique_id=1941672408 instance=ExtResource("2_fxryi")]
+layout_mode = 2
+gearTexture = SubResource("AtlasTexture_bjr7x")
+infoID = 1
+
 [connection signal="buyed" from="shop/HBoxContainer/GearBuy" to="." method="_on_gear_buy_buyed"]
+[connection signal="buyed" from="shop/HBoxContainer/GearBuy2" to="." method="_on_gear_buy_buyed"]

@@ -7,12 +7,11 @@ extends GearClass
 func _on_interactive_area_has_been_hited(hitInfo: HitData) -> void:
 	var newHit := handleHitInfo(hitInfo)
 	
-	#if newHit != null and newHit.strength > 0:
 	if newHit.strength > 0:
 		anim.stop()
 		anim.play("shoot")
 		
 	windup.wind(newHit)
-	
+
 func _on_windup_stoped_wind_up(hitInfo: HitData) -> void:
 	hitSender.sendHit(hitInfo)

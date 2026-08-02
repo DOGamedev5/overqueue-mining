@@ -5,8 +5,11 @@ extends CanvasLayer
 @onready var space := $Control/VBoxContainer/space
 @onready var shop := $shop
 @onready var shopOptions := $shop/HBoxContainer
-@onready var selectionInfoPanel := $Control/VBoxContainer/hbox/PanelContainer
-@onready var selectionInfoText := $Control/VBoxContainer/hbox/PanelContainer/RichTextLabel
+@onready var selectionInfoPanel := $Control/VBoxContainer/hbox/vbox/PanelContainer
+@onready var selectionInfoText := $Control/VBoxContainer/hbox/vbox/PanelContainer/RichTextLabel
+
+@onready var gearInfoPanel := $Control/VBoxContainer/hbox/vbox/selectionInformation
+@onready var gearInfoText := $Control/VBoxContainer/hbox/vbox/selectionInformation/VBoxContainer/RichTextLabel
 
 @onready var tutorial := 0
 @onready var tutorialTimer := -1.0
@@ -26,6 +29,7 @@ func _process(delta: float) -> void:
 	tutorialThingy(delta)
 	
 	var text := ""
+	var lastInteraction = null
 	var properties : GearProperties = null
 	if tile_selector.grabbed != null and tile_selector.grabbed is GearClass:
 		properties = tile_selector.grabbed.properties
@@ -39,11 +43,20 @@ func _process(delta: float) -> void:
 		for obj in tile_selector.selectorArea.getOnRegionOnChildrenOf(tile_selector.objectsLayer):
 			if obj is InteractiveArea and obj.object is GearClass:
 				properties = obj.object.properties
+				lastInteraction = obj.object.lastInteractionInfo
 				break
 	
 	if properties != null:
-		text += "NAME: {0}\nStrength: {1}\nReaction_lost: {2}\nResistence: {3}".format([properties.gearName, properties.strength, properties.strengthLoss, properties.resistence])
-		
+		text += "Gear_name: {0}\nClick_Strength: {1}\nReaction_loss: {2}\nResistence: {3}".format([properties.gearName, properties.strength, properties.strengthLoss, properties.resistence])
+	
+	if lastInteraction != null:
+		gearInfoPanel.visible = true
+		gearInfoText.text = "Strength_received: {received}\nStrength_sended: {sended}".format(lastInteraction)
+	else:
+		gearInfoPanel.visible = false
+		gearInfoText.text = ""
+
+	
 	selectionInfoText.text = text
 	selectionInfoPanel.visible = text != ""
 	
@@ -77,7 +90,7 @@ func _animate_shop():
 
 func tutorialThingy(delta : float):
 	if tutorial == 0:
-		info.text = "Click on the block to obtain points. {0}/4".format([GlobalInfo.points])
+		info.text = "Click on the block to obtain points. {0}/20".format([GlobalInfo.points])
 		if GlobalInfo.points >= 4: tutorial = 1
 	
 	if tutorial == 1:  info.text = "Buy a interactor on Shop menu(press E)."

@@ -1,8 +1,15 @@
 [gd_scene format=3 uid="uid://cyubnt7f1ahs"]
 
-[ext_resource type="Script" uid="uid://bc0yt57prwtt0" path="res://src/classes/gearClass.gd" id="1_r1dbm"]
-[ext_resource type="Texture2D" uid="uid://54q4205s8ruv" path="res://src/gears/Sender/sender.png" id="2_t80o2"]
+[ext_resource type="Script" uid="uid://doq21ukkw7fck" path="res://src/gears/Sender/sender.gd" id="1_spc2t"]
+[ext_resource type="Resource" uid="uid://b7to01phdf52f" path="res://src/register/gears/properties/sender.tres" id="2_50fvi"]
+[ext_resource type="Texture2D" uid="uid://dlvuomsaybrm5" path="res://src/gears/Sender/sender.png" id="2_t80o2"]
+[ext_resource type="Script" uid="uid://b05o1uwr217vr" path="res://src/classes/hitSender.gd" id="3_m23kl"]
 [ext_resource type="Texture2D" uid="uid://cvj0apojcjx5d" path="res://src/gears/interactor/impactArea.png" id="3_spc2t"]
+[ext_resource type="Script" uid="uid://vkdydfnum0c2" path="res://src/classes/interactiveArea.gd" id="5_m23kl"]
+[ext_resource type="Script" uid="uid://bhlvgwrkobwdh" path="res://src/classes/windup.gd" id="6_ujit5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ujit5"]
+size = Vector2(12, 12)
 
 [sub_resource type="Animation" id="Animation_m23kl"]
 length = 0.001
@@ -21,7 +28,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("pivot:scale")
+tracks/1/path = NodePath("pivot/Sender:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -34,7 +41,7 @@ tracks/1/keys = {
 [sub_resource type="Animation" id="Animation_ujit5"]
 resource_name = "shoot"
 length = 0.39999999999999997
-step = 0.1
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -42,7 +49,7 @@ tracks/0/path = NodePath("pivot/Sender:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.100000024, 0.20000005, 0.3, 0.4),
+"times": PackedFloat32Array(0, 0.100000024, 0.15, 0.2, 0.25),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [0, 1, 2, 3, 0]
@@ -50,11 +57,11 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("pivot:scale")
+tracks/1/path = NodePath("pivot/Sender:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.3, 0.4),
+"times": PackedFloat32Array(0, 0.05, 0.25, 0.3),
 "transitions": PackedFloat32Array(3.3635864, 0.59460366, 0.6372803, 1),
 "update": 0,
 "values": [Vector2(1, 1), Vector2(1.2, 1.2), Vector2(0.9, 0.9), Vector2(1, 1)]
@@ -66,21 +73,58 @@ _data = {
 &"shoot": SubResource("Animation_ujit5")
 }
 
-[node name="Sender" type="Node2D" unique_id=1321309035]
-script = ExtResource("1_r1dbm")
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_50fvi"]
+size = Vector2(12, 12)
+
+[node name="Sender" type="Node2D" unique_id=1321309035 node_paths=PackedStringArray("spritePivot", "impactVisual")]
+script = ExtResource("1_spc2t")
+properties = ExtResource("2_50fvi")
+spritePivot = NodePath("pivot")
+impactVisual = NodePath("pivot/ImpactArea")
 metadata/_custom_type_script = "uid://bc0yt57prwtt0"
 
 [node name="pivot" type="Node2D" parent="." unique_id=1827724071]
 position = Vector2(8, 8)
 
 [node name="Sender" type="Sprite2D" parent="pivot" unique_id=1506245039]
-position = Vector2(16, 0)
 texture = ExtResource("2_t80o2")
+centered = false
+offset = Vector2(-8, -8)
 hframes = 4
+
+[node name="HitSender" type="Area2D" parent="pivot" unique_id=253405725]
+position = Vector2(32, 0)
+script = ExtResource("3_m23kl")
+metadata/_custom_type_script = "uid://b05o1uwr217vr"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="pivot/HitSender" unique_id=485934203]
+shape = SubResource("RectangleShape2D_ujit5")
+
+[node name="ImpactArea" type="Sprite2D" parent="pivot" unique_id=1837145903]
+position = Vector2(32, 0)
+texture = ExtResource("3_spc2t")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1123179107]
 libraries/ = SubResource("AnimationLibrary_50fvi")
 
-[node name="ImpactArea" type="Sprite2D" parent="." unique_id=1837145903]
-position = Vector2(40, 8)
-texture = ExtResource("3_spc2t")
+[node name="InteractiveArea" type="Area2D" parent="." unique_id=1864253540 node_paths=PackedStringArray("object")]
+position = Vector2(8, 8)
+script = ExtResource("5_m23kl")
+object = NodePath("..")
+metadata/_custom_type_script = "uid://vkdydfnum0c2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractiveArea" unique_id=841276680]
+shape = SubResource("RectangleShape2D_50fvi")
+
+[node name="cooldown" type="Timer" parent="." unique_id=158923611]
+wait_time = 0.4
+one_shot = true
+
+[node name="windup" type="Timer" parent="." unique_id=1744176055]
+wait_time = 0.25
+one_shot = true
+script = ExtResource("6_ujit5")
+metadata/_custom_type_script = "uid://bhlvgwrkobwdh"
+
+[connection signal="hasBeenHited" from="InteractiveArea" to="." method="_on_interactive_area_has_been_hited"]
+[connection signal="stopedWindUP" from="windup" to="." method="_on_windup_stoped_wind_up"]
