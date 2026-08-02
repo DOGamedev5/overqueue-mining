@@ -16,4 +16,4 @@ export_credentials.cfg
 data_*/
 mono_crash.*.json
 
-over-queued-mining/export/windows/*.exe
+over-queued-mining/export/windows/*
