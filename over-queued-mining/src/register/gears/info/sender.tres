@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("1_apmh4")
-price = 50
+price = 20
 sceneReference = ExtResource("2_swiea")
 propertiesReference = ExtResource("1_nyqf5")
 metadata/_custom_type_script = "uid://4s1vri6v6jsv"

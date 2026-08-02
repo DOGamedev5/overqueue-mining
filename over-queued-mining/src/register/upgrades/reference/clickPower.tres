@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="UpgradeReference" format=3 uid="uid://b41irpm4g6nyb"]
+
+[ext_resource type="Script" uid="uid://bln0r4ij4ceso" path="res://src/classes/upgradeReference.gd" id="1_wp8h4"]
+
+[resource]
+script = ExtResource("1_wp8h4")
+tag = "clickPower"
+subtag = "0"
+metadata/_custom_type_script = "uid://bln0r4ij4ceso"

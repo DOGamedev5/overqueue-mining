@@ -46,20 +46,18 @@ func rotateDirection(dir : DIR):
 		elif dir == DIR.DOWN: spritePivot.rotation_degrees = 90
 
 func handleHitInfo(hitInfo : HitData) -> HitData:
-	var newHit := HitData.new(hitInfo.initialValue + 1, true)
-	newHit.sequencialHits = hitInfo.sequencialHits + 1
-	if hitInfo.isSource:
-		newHit.setCurrentStrength(properties.strength)
-	elif hitInfo.strength < properties.resistence:
+	var newHit := HitData.new(hitInfo.initialValue + properties.complexityPoints, true)
+	
+	if hitInfo.strength < properties.powerCost:
 		newHit.setCurrentStrength(0)
 	else:
 		newHit.setCurrentStrength(hitInfo.strength)
-		newHit.addStrength(-properties.strengthLoss)
+		newHit.addStrength(-properties.powerCost)
 	
-	if not hitInfo.isSource:
-		lastInteractionInfo["received"] = hitInfo.strength
-	else:
-		lastInteractionInfo["received"] = "Mouse"
+	#if not hitInfo.isSource:
+	lastInteractionInfo["received"] = hitInfo.strength
+	#else:
+		#lastInteractionInfo["received"] = "Mouse"
 		
 	lastInteractionInfo["sended"] = newHit.strength
 	

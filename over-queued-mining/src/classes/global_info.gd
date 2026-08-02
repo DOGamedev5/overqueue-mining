@@ -1,6 +1,8 @@
 extends Node
 
 @onready var points := 0
+@onready var clickPower := 4
+@onready var complexityRecord := 0
 @onready var message_queue : Array[String] = []
 
 @onready var gearsShopInfo : Array[GearInfo] = [
@@ -20,3 +22,13 @@ func tryToBuy(price : int) -> bool:
 		return true
 		
 	return false
+
+func tryToBuyUpgrade(price : int) -> bool:
+	if price <= points:
+		removePoints(price)
+		return true
+		
+	return false
+
+func tryRecord(value : int):
+	if value > complexityRecord: complexityRecord = value

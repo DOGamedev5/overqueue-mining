@@ -21,6 +21,7 @@ func _on_hitbox_has_been_hited(hitInfo : HitData) -> void:
 		blockSprite.scale = Vector2(1.3, 1.3)
 		
 		GlobalInfo.addPoints(hitInfo.initialValue)
+		GlobalInfo.tryRecord(hitInfo.initialValue)
 		
 		currentLife -= hitInfo.strength
 		timeHealthChange = 1.2

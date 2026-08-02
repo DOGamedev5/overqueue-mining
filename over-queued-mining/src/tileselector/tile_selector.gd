@@ -7,14 +7,18 @@ extends Node2D
 @onready var sprite := $Select
 @onready var selectorArea : HitSender = $Area2D
 
-@onready var clickHitData : HitData = HitData.new(8, false, true)
+@onready var clickHitData : HitData = HitData.new(1, false, true)
 
 @onready var grabbed : Node2D = null
 @onready var grabNode := $grabbed
 
-#@onready var leftTextInfo := $Control/hbox/left
-#@onready var rightTextInfo := $Control/hbox/right
-@onready var rightTextInfo := $Control/right
+@onready var leftTextInfo := $Control/hbox/left
+@onready var rightTextInfo := $Control/hbox/right
+
+@export var onMenu := false
+
+func _ready() -> void:
+	clickHitData.setCurrentStrength(GlobalInfo.clickPower)
 
 func _input(event: InputEvent) -> void:
 	var posUnhandled = get_global_mouse_position()
@@ -24,7 +28,11 @@ func _input(event: InputEvent) -> void:
 	currentTilePos.x = int((currentPos.x-8)/16.0)
 	currentTilePos.y = int((currentPos.y-8)/16.0)
 	
-	if event.is_action_pressed("click") and grabbed == null:selectorArea.sendHit(clickHitData)
+	if onMenu: return
+	
+	if event.is_action_pressed("click") and grabbed == null:
+		clickHitData.setCurrentStrength(UpgradeManager.getValueUpgrades("clickPower", 4))
+		selectorArea.sendHit(clickHitData)
 	if grabbed is GameObject:
 		if event.is_action_pressed("rotate_up"): grabbed.rotationInputUp()
 		elif event.is_action_pressed("roate_down"): grabbed.rotationInputDown()

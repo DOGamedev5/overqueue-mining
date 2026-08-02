@@ -4,8 +4,8 @@
 
 [resource]
 script = ExtResource("1_ygrn1")
-strength = 20
-strengthLoss = 5
+powerCost = 1
 gearName = "Interactor"
-sellValue = 15
+nameColor = "#de123b"
+sellValue = 3
 metadata/_custom_type_script = "uid://cwylm24g7uyii"

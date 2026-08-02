@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://b65ib8b8ttc7e"]
+
+[ext_resource type="Texture2D" uid="uid://c4o2aqcuke7qu" path="res://src/HUD/icons/iconHolder.png" id="1_maptm"]
+[ext_resource type="Script" uid="uid://cpb6u7l2q2apa" path="res://src/HUD/upgradeButton/upgrade_button.gd" id="2_6nftk"]
+[ext_resource type="Texture2D" uid="uid://biogj5rnj6d2x" path="res://src/HUD/icons/click.png" id="3_blv7y"]
+[ext_resource type="FontFile" uid="uid://parivl3t7lr0" path="res://src/HUD/fonts/Font.ttf" id="4_mcc6t"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k3nxe"]
+atlas = ExtResource("1_maptm")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqimx"]
+atlas = ExtResource("1_maptm")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vldo3"]
+atlas = ExtResource("1_maptm")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tmvuy"]
+atlas = ExtResource("1_maptm")
+region = Rect2(48, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ufcr6"]
+atlas = ExtResource("1_maptm")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="LabelSettings" id="LabelSettings_k3nxe"]
+font = ExtResource("4_mcc6t")
+font_size = 13
+
+[node name="UpgradeButton" type="TextureButton" unique_id=955290256]
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+pivot_offset = Vector2(12, 12)
+size_flags_vertical = 4
+texture_normal = SubResource("AtlasTexture_k3nxe")
+texture_pressed = SubResource("AtlasTexture_tqimx")
+texture_hover = SubResource("AtlasTexture_vldo3")
+texture_disabled = SubResource("AtlasTexture_tmvuy")
+texture_focused = SubResource("AtlasTexture_ufcr6")
+script = ExtResource("2_6nftk")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=258312377]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+texture = ExtResource("3_blv7y")
+
+[node name="Label" type="Label" parent="." unique_id=1795892493]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.83300006
+anchor_right = 0.5
+anchor_bottom = 0.83300006
+offset_left = -64.0
+offset_top = 6.0079994
+offset_right = 64.0
+offset_bottom = 17.008
+text = "Click Power"
+label_settings = SubResource("LabelSettings_k3nxe")
+horizontal_alignment = 1
+
+[connection signal="pressed" from="." to="." method="_on_pressed"]

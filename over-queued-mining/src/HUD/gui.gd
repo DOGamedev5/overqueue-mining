@@ -1,9 +1,12 @@
 extends CanvasLayer
 
-@onready var points := $Control/HBoxContainer/panel/VBoxContainer/Coins
+@onready var points := $Control/HBoxContainer/VBoxContainer/panel/VBoxContainer/Coins
+@onready var click := $Control/HBoxContainer/VBoxContainer/panel/VBoxContainer/click
+@onready var record := $Control/HBoxContainer/VBoxContainer/panel/VBoxContainer/record
 @onready var info := $Control/VBoxContainer/info
 @onready var space := $Control/VBoxContainer/space
 @onready var shop := $shop
+@onready var upgrade := $upgrade
 @onready var shopOptions := $shop/HBoxContainer
 @onready var selectionInfoPanel := $Control/VBoxContainer/hbox/vbox/PanelContainer
 @onready var selectionInfoText := $Control/VBoxContainer/hbox/vbox/PanelContainer/RichTextLabel
@@ -23,6 +26,8 @@ signal gearBuyed(id : int)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	points.text = "Points: {0}".format([GlobalInfo.points])
+	click.text = "Click Power: {0}".format([int(UpgradeManager.getValueUpgrades("clickPower", 4))])
+	record.text = "Complexity Record: {0}".format([GlobalInfo.complexityRecord])
 	
 	space.custom_minimum_size.y = shop.scale.y * 70+8
 	
@@ -47,7 +52,7 @@ func _process(delta: float) -> void:
 				break
 	
 	if properties != null:
-		text += "Gear_name: {0}\nClick_Strength: {1}\nReaction_loss: {2}\nResistence: {3}".format([properties.gearName, properties.strength, properties.strengthLoss, properties.resistence])
+		text += "[color=#f2d166]Gear_name:[/color] [color={3}]{0}[/color]\nPower_cost: {1}\nComplexity: {2}".format([properties.gearName, properties.powerCost, properties.complexityPoints, properties.nameColor])
 	
 	if lastInteraction != null:
 		gearInfoPanel.visible = true
@@ -65,6 +70,10 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("shop"):
 		shopShowing = !shopShowing
 		_animate_shop()
+	
+	if event.is_action_pressed("upgrade"):
+		upgrade.visible = not upgrade.visible
+		tile_selector.onMenu = upgrade.visible
 			
 
 func _on_gear_buy_buyed(id: int) -> void:
@@ -76,7 +85,6 @@ func _on_gear_buy_buyed(id: int) -> void:
 func _animate_shop():
 	if shopShowing:
 		shop.visible = true
-		space.visible = true
 		
 	var targetScale := 1 if shopShowing else 0
 	
@@ -86,11 +94,10 @@ func _animate_shop():
 	await tween.finished
 	if not shopShowing:
 		shop.visible = false
-		#space.visible = false
 
 func tutorialThingy(delta : float):
 	if tutorial == 0:
-		info.text = "Click on the block to obtain points. {0}/20".format([GlobalInfo.points])
+		info.text = "Click on the block to obtain points. {0}/4".format([GlobalInfo.points])
 		if GlobalInfo.points >= 4: tutorial = 1
 	
 	if tutorial == 1:  info.text = "Buy a interactor on Shop menu(press E)."
@@ -106,4 +113,4 @@ func tutorialThingy(delta : float):
 		if tutorialTimer <= 0:
 			info.text = ""
 			info.visible = false
-			tutorial = -1
+			tutorial = 5
