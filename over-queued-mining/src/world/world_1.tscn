@@ -5,6 +5,14 @@
 [ext_resource type="PackedScene" uid="uid://bhpmwrveuo3yj" path="res://src/world/block/block.tscn" id="3_ppv74"]
 [ext_resource type="PackedScene" uid="uid://cy1nh6wd2dvyk" path="res://src/HUD/GUI.tscn" id="3_xd7vh"]
 
+[sub_resource type="Environment" id="Environment_k3nxe"]
+background_mode = 1
+background_color = Color(0.842187, 0.89713544, 0.63663906, 1)
+background_energy_multiplier = 3.3
+ambient_light_source = 3
+ambient_light_color = Color(0.7259703, 0.88671875, 0.59691876, 1)
+ambient_light_energy = 2.4
+
 [node name="world1" type="Node2D" unique_id=2120840071]
 
 [node name="floor" type="TileMapLayer" parent="." unique_id=59999367]
@@ -94,5 +102,8 @@ objectsLayer = NodePath("../objects")
 
 [node name="Gui" parent="." unique_id=1432043895 node_paths=PackedStringArray("tile_selector") instance=ExtResource("3_xd7vh")]
 tile_selector = NodePath("../TileSelector")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1624678113]
+environment = SubResource("Environment_k3nxe")
 
 [connection signal="gearBuyed" from="Gui" to="TileSelector" method="_on_gui_gear_buyed"]

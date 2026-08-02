@@ -7,5 +7,5 @@ script = ExtResource("1_ygrn1")
 strength = 20
 strengthLoss = 5
 gearName = "Interactor"
-sellValue = 30
+sellValue = 15
 metadata/_custom_type_script = "uid://cwylm24g7uyii"
