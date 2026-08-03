@@ -5,6 +5,10 @@ class_name GearClass extends GameObject
 @export var grabed := false
 @export var impactVisual : Node2D
 
+@export var interactArea : InteractiveArea
+
+@onready var problemParticle := preload("uid://bix3c16d3o1yx")
+
 enum DIR {
 	RIGHT,
 	UP,
@@ -19,7 +23,9 @@ enum DIR {
 	"sended" : 0
 }
 
-func _ready() -> void: rotateDirection(direction)
+func _ready() -> void:
+	if interactArea: interactArea.hasBeenHited.connect(beenHited)
+	rotateDirection(direction)
 
 func _process(_delta : float) -> void:
 	if impactVisual != null:
@@ -37,7 +43,6 @@ func rotationInputDown():
 	
 	rotateDirection(direction)
 
-
 func rotateDirection(dir : DIR):
 	if spritePivot != null:
 		if dir == DIR.RIGHT:  spritePivot.rotation_degrees = 0
@@ -46,7 +51,7 @@ func rotateDirection(dir : DIR):
 		elif dir == DIR.DOWN: spritePivot.rotation_degrees = 90
 
 func handleHitInfo(hitInfo : HitData) -> HitData:
-	var newHit := HitData.new(hitInfo.initialValue + properties.complexityPoints, true)
+	var newHit := HitData.new(hitInfo.initialValue + properties.complexityPoints) # , true
 	
 	if hitInfo.strength < properties.powerCost:
 		newHit.setCurrentStrength(0)
@@ -54,11 +59,19 @@ func handleHitInfo(hitInfo : HitData) -> HitData:
 		newHit.setCurrentStrength(hitInfo.strength)
 		newHit.addStrength(-properties.powerCost)
 	
-	#if not hitInfo.isSource:
+	if newHit.strength <= 0 and lastInteractionInfo["received"] > 0: 
+		var part = problemParticle.instantiate()
+		part.position = spritePivot.position
+		add_child(part)
+		if interactArea: interactArea.cancelCooldown()
+	
 	lastInteractionInfo["received"] = hitInfo.strength
-	#else:
-		#lastInteractionInfo["received"] = "Mouse"
-		
 	lastInteractionInfo["sended"] = newHit.strength
 	
 	return newHit
+
+func beenHited(_hitInfo : HitData, _dir : int) -> void:
+	pass
+
+func acceptHit(_hitInfo : HitData, _dir : int) -> bool:
+	return true

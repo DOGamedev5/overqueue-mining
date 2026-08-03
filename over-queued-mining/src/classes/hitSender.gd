@@ -19,5 +19,5 @@ func getOnRegionOnChildrenOf(node : Node2D) -> Array[InteractiveArea]:
 		
 	return array
 
-func sendHit(hitInfo : HitData):
-	for interact in getOnRegion(): interact.hit(hitInfo)
+func sendHit(hitInfo : HitData, direction : int):
+	for interact in getOnRegion(): interact.hit(hitInfo, direction)

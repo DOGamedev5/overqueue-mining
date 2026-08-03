@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="GearProperties" format=3 uid="uid://ctid0d4scfhho"]
+
+[ext_resource type="Script" uid="uid://cwylm24g7uyii" path="res://src/classes/gearProperties.gd" id="1_p4prn"]
+
+[resource]
+script = ExtResource("1_p4prn")
+complexityPoints = 4
+powerCost = 1
+gearName = "Wave"
+nameColor = "#7aff38"
+sellValue = 10
+metadata/_custom_type_script = "uid://cwylm24g7uyii"

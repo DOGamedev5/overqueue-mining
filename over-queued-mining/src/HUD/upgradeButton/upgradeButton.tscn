@@ -56,17 +56,27 @@ offset_right = 8.0
 offset_bottom = 8.0
 texture = ExtResource("3_blv7y")
 
-[node name="Label" type="Label" parent="." unique_id=1795892493]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=868805631]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.83300006
+anchor_top = 1.042
 anchor_right = 0.5
-anchor_bottom = 0.83300006
-offset_left = -64.0
-offset_top = 6.0079994
-offset_right = 64.0
-offset_bottom = 17.008
+anchor_bottom = 1.042
+offset_left = -48.0
+offset_top = -0.0080013275
+offset_right = 48.0
+offset_bottom = 47.991997
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1795892493]
+layout_mode = 2
+text = "Click Power"
+label_settings = SubResource("LabelSettings_k3nxe")
+horizontal_alignment = 1
+
+[node name="Price" type="Label" parent="VBoxContainer" unique_id=1277012768]
+layout_mode = 2
 text = "Click Power"
 label_settings = SubResource("LabelSettings_k3nxe")
 horizontal_alignment = 1

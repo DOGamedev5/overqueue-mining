@@ -1,6 +1,6 @@
 extends Node
 
-@onready var points := 0
+@onready var points := 40
 @onready var clickPower := 4
 @onready var complexityRecord := 0
 @onready var message_queue : Array[String] = []
@@ -8,6 +8,7 @@ extends Node
 @onready var gearsShopInfo : Array[GearInfo] = [
 	preload("res://src/register/gears/info/interactor.tres"),
 	preload("res://src/register/gears/info/sender.tres"),
+	preload("res://src/register/gears/info/wave.tres"),
 ]
 
 @export var buyBlocked := false

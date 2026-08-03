@@ -9,9 +9,6 @@ extends Node
 	}
 }
 
-func _ready() -> void:
-	print(getValueUpgrades("clickPower", 4))
-
 func getUpgrade(reference : UpgradeReference) -> UpgradeInfo:
 	return upgradesData[reference.tag][reference.type][reference.subtag]
 

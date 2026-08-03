@@ -8,9 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cvj0apojcjx5d" path="res://src/gears/interactor/impactArea.png" id="5_732ao"]
 [ext_resource type="Script" uid="uid://bhlvgwrkobwdh" path="res://src/classes/windup.gd" id="6_732ao"]
 [ext_resource type="Script" uid="uid://chgum0ddo1r1j" path="res://src/classes/cooldown.gd" id="6_eu043"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3nxe"]
-size = Vector2(12, 12)
+[ext_resource type="PackedScene" uid="uid://8yg1ek0gphsk" path="res://src/HUD/cooldown/cooldownIndicator.tscn" id="9_6qiel"]
 
 [sub_resource type="Animation" id="Animation_uvi5m"]
 length = 0.001
@@ -101,23 +99,15 @@ _data = {
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hijj2"]
 size = Vector2(12, 12)
 
-[node name="Interactor" type="Node2D" unique_id=36085486 node_paths=PackedStringArray("spritePivot", "impactVisual")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k3nxe"]
+size = Vector2(12, 12)
+
+[node name="Interactor" type="Node2D" unique_id=36085486 node_paths=PackedStringArray("spritePivot", "impactVisual", "interactArea")]
 script = ExtResource("1_uvi5m")
 properties = ExtResource("2_ffaut")
 spritePivot = NodePath("pivot")
 impactVisual = NodePath("pivot/ImpactArea")
-
-[node name="InteractiveArea" type="Area2D" parent="." unique_id=1725366710 node_paths=PackedStringArray("object", "cooldown")]
-collision_layer = 2
-collision_mask = 0
-script = ExtResource("3_u2oma")
-object = NodePath("..")
-cooldown = NodePath("../cooldown")
-metadata/_custom_type_script = "uid://vkdydfnum0c2"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractiveArea" unique_id=335975234]
-position = Vector2(8, 8)
-shape = SubResource("RectangleShape2D_k3nxe")
+interactArea = NodePath("InteractiveArea")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2007357938]
 libraries/ = SubResource("AnimationLibrary_u2oma")
@@ -145,7 +135,7 @@ position = Vector2(16, 0)
 texture = ExtResource("5_732ao")
 
 [node name="cooldown" type="Timer" parent="." unique_id=1343594841 node_paths=PackedStringArray("texture")]
-wait_time = 0.35
+wait_time = 0.4
 one_shot = true
 script = ExtResource("6_eu043")
 texture = NodePath("../pivot/Interactor")
@@ -155,5 +145,25 @@ wait_time = 0.275
 one_shot = true
 script = ExtResource("6_732ao")
 
-[connection signal="hasBeenHited" from="InteractiveArea" to="." method="_on_interactive_area_has_been_hited"]
+[node name="barr" parent="." unique_id=82930962 node_paths=PackedStringArray("timerRef") instance=ExtResource("9_6qiel")]
+offset_left = 0.0
+offset_top = 18.0
+offset_right = 16.0
+offset_bottom = 20.0
+timerRef = NodePath("../cooldown")
+
+[node name="InteractiveArea" type="Area2D" parent="." unique_id=1725366710 node_paths=PackedStringArray("object", "cooldown", "cooldownBarr")]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("3_u2oma")
+object = NodePath("..")
+cooldown = NodePath("../cooldown")
+cooldownBarr = NodePath("../barr")
+metadata/_custom_type_script = "uid://vkdydfnum0c2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InteractiveArea" unique_id=335975234]
+position = Vector2(8, 8)
+shape = SubResource("RectangleShape2D_k3nxe")
+
 [connection signal="stopedWindUP" from="windup" to="." method="_on_windup_stoped_wind_up"]
+[connection signal="hasBeenHited" from="InteractiveArea" to="." method="_on_interactive_area_has_been_hited"]

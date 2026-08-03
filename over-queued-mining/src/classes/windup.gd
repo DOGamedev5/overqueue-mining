@@ -1,24 +1,17 @@
 class_name WindUp extends Timer
 
-@onready var queue : Array[HitData] = []
+@onready var queue : HitData
 
 signal stopedWindUP(hitInfo : HitData)
-
-@onready var started := false
 
 func _ready() -> void:
 	timeout.connect(windUpFinish)
 
 func wind(data : HitData):
-	if time_left <= 0 and not started:
-		queue.append(data)
+	if is_stopped():
+		queue = data
 		start()
-		started = true
 		
 func windUpFinish():
-	stopedWindUP.emit(queue.front())
-	queue.pop_front()
-	if queue.size() > 0:
-		start()
-	else:
-		started = false
+	stopedWindUP.emit(queue)
+	queue = null

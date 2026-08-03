@@ -14,22 +14,22 @@ enum TYPE {
 @export var valuePerLevel := 3.0
 
 func getCurrentPrice() -> int:
-	var value : int = int(price)
+	var value : float = price
 	if increaseType == TYPE.ADDER:
-		value +=  int(increase * level)
+		value +=  increase * level
 	else:
-		value *=  int(pow(increase, level))
+		value *=  pow(increase, level)
 	
-	return value
+	return int(value)
 	
 func buyUpgrade():
 	if GlobalInfo.tryToBuyUpgrade(getCurrentPrice()):
 		level += 1
 		
-func getUpgrade(value : float):
+func getUpgrade(value : float) -> int:
 	if type == TYPE.ADDER:
-		value +=  int(valuePerLevel * level)
+		value +=  valuePerLevel * level
 	else:
-		value *=  int(pow(increase, level))
+		value *=  pow(increase, level)
 	
-	return value
+	return int(value)

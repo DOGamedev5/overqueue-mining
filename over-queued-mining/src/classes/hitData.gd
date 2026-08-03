@@ -6,6 +6,14 @@ class_name HitData extends Resource
 @export var strength := 1
 @export var isSource := false
 @export var multiply := 0.0
+enum DIR {
+	NONE,
+	RIGHT,
+	UP,
+	LEFT,
+	DOWN
+}
+@export var direction : DIR = DIR.NONE
 
 func _init(initValue, bypass := false, source := false) -> void:
 	initialValue = initValue

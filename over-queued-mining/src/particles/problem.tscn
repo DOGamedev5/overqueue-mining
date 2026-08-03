@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bix3c16d3o1yx"]
+
+[ext_resource type="Texture2D" uid="uid://bvboegf3duv86" path="res://src/particles/exclamation.png" id="1_qobtg"]
+[ext_resource type="Script" uid="uid://dmjbsohlmiys8" path="res://src/particles/problem.gd" id="2_g4sq5"]
+
+[sub_resource type="Gradient" id="Gradient_k3nxe"]
+offsets = PackedFloat32Array(0, 0.77804875, 0.9536585)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[node name="Problem" type="CPUParticles2D" unique_id=1227630701]
+z_index = 2
+emitting = false
+amount = 1
+texture = ExtResource("1_qobtg")
+lifetime = 1.8
+one_shot = true
+preprocess = 0.2
+direction = Vector2(0, -1)
+spread = 0.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 38.0
+initial_velocity_max = 38.0
+damping_min = 40.0
+damping_max = 40.0
+color_ramp = SubResource("Gradient_k3nxe")
+script = ExtResource("2_g4sq5")

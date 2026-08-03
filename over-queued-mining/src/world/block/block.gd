@@ -4,7 +4,7 @@ class_name BlockStone extends Node2D
 @onready var cooldown := $cooldown
 @onready var healthBarr := $barr
 const interpolation := 8
-const maxLife := 1000.0
+const maxLife := 100.0
 @onready var currentLife := maxLife
 
 @onready var timeHealthChange := -1.0
@@ -12,7 +12,7 @@ const maxLife := 1000.0
 func  _ready() -> void:
 	healthBarr.max_value = maxLife
 
-func _on_hitbox_has_been_hited(hitInfo : HitData) -> void:
+func _on_hitbox_has_been_hited(hitInfo : HitData, _dir : int) -> void:
 	if hitInfo.strength > 0:
 		randomize()
 		blockSprite.position.x = randf_range(-1.0, 1.0)

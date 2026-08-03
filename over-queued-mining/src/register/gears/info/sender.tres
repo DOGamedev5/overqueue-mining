@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="GearInfo" format=3 uid="uid://cldhw4ljr68ja"]
+[gd_resource type="Resource" script_class="GearInfo" format=3 uid="uid://d1yklg5xjrdwh"]
 
 [ext_resource type="Script" uid="uid://4s1vri6v6jsv" path="res://src/classes/gearInfo.gd" id="1_apmh4"]
 [ext_resource type="Resource" uid="uid://b7to01phdf52f" path="res://src/register/gears/properties/sender.tres" id="1_nyqf5"]
@@ -6,7 +6,7 @@
 
 [resource]
 script = ExtResource("1_apmh4")
-price = 20
+price = 8
 sceneReference = ExtResource("2_swiea")
 propertiesReference = ExtResource("1_nyqf5")
 metadata/_custom_type_script = "uid://4s1vri6v6jsv"

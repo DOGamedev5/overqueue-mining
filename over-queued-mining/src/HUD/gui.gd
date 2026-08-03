@@ -68,12 +68,15 @@ func _process(delta: float) -> void:
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("shop"):
-		shopShowing = !shopShowing
+		shopShowing = !shopShowing and not tile_selector.onMenu
 		_animate_shop()
 	
 	if event.is_action_pressed("upgrade"):
 		upgrade.visible = not upgrade.visible
 		tile_selector.onMenu = upgrade.visible
+		if tile_selector.onMenu:
+			shopShowing = false
+			_animate_shop()
 			
 
 func _on_gear_buy_buyed(id: int) -> void:

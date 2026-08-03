@@ -5,8 +5,10 @@
 [ext_resource type="PackedScene" uid="uid://fsncapfaf3y4" path="res://src/HUD/button/gearBuy.tscn" id="2_fxryi"]
 [ext_resource type="Texture2D" uid="uid://mb6jq0tbx860" path="res://src/gears/interactor/interactor.png" id="3_1imlk"]
 [ext_resource type="Texture2D" uid="uid://dlvuomsaybrm5" path="res://src/gears/Sender/sender.png" id="5_77viu"]
+[ext_resource type="Texture2D" uid="uid://cpo4f3w3wqo7k" path="res://src/gears/wave/wave.png" id="6_1yxq2"]
 [ext_resource type="PackedScene" uid="uid://b65ib8b8ttc7e" path="res://src/HUD/upgradeButton/upgradeButton.tscn" id="6_bjr7x"]
 [ext_resource type="Resource" uid="uid://b41irpm4g6nyb" path="res://src/register/upgrades/reference/clickPower.tres" id="7_3n6yq"]
+[ext_resource type="Texture2D" uid="uid://biogj5rnj6d2x" path="res://src/HUD/icons/click.png" id="8_np2r2"]
 
 [sub_resource type="Theme" id="Theme_k3nxe"]
 
@@ -58,6 +60,10 @@ region = Rect2(0, 0, 16, 16)
 [sub_resource type="AtlasTexture" id="AtlasTexture_bjr7x"]
 atlas = ExtResource("5_77viu")
 region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7nm5n"]
+atlas = ExtResource("6_1yxq2")
+region = Rect2(16, 16, 16, 16)
 
 [node name="Gui" type="CanvasLayer" unique_id=1432043895]
 script = ExtResource("1_4ljqj")
@@ -219,6 +225,11 @@ layout_mode = 2
 gearTexture = SubResource("AtlasTexture_bjr7x")
 infoID = 1
 
+[node name="GearBuy3" parent="shop/HBoxContainer" unique_id=794400130 instance=ExtResource("2_fxryi")]
+layout_mode = 2
+gearTexture = SubResource("AtlasTexture_7nm5n")
+infoID = 2
+
 [node name="upgrade" type="ColorRect" parent="." unique_id=843317273]
 visible = false
 anchors_preset = 15
@@ -248,6 +259,8 @@ alignment = 1
 [node name="UpgradeButton" parent="upgrade/MarginContainer/HBoxContainer" unique_id=955290256 instance=ExtResource("6_bjr7x")]
 layout_mode = 2
 upgradeInfo = ExtResource("7_3n6yq")
+image = ExtResource("8_np2r2")
 
 [connection signal="buyed" from="shop/HBoxContainer/GearBuy" to="." method="_on_gear_buy_buyed"]
 [connection signal="buyed" from="shop/HBoxContainer/GearBuy2" to="." method="_on_gear_buy_buyed"]
+[connection signal="buyed" from="shop/HBoxContainer/GearBuy3" to="." method="_on_gear_buy_buyed"]

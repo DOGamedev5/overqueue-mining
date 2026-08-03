@@ -32,7 +32,7 @@ func _input(event: InputEvent) -> void:
 	
 	if event.is_action_pressed("click") and grabbed == null:
 		clickHitData.setCurrentStrength(UpgradeManager.getValueUpgrades("clickPower", 4))
-		selectorArea.sendHit(clickHitData)
+		selectorArea.sendHit(clickHitData, HitData.DIR.NONE)
 	if grabbed is GameObject:
 		if event.is_action_pressed("rotate_up"): grabbed.rotationInputUp()
 		elif event.is_action_pressed("roate_down"): grabbed.rotationInputDown()
@@ -57,6 +57,13 @@ func _input(event: InputEvent) -> void:
 				if grabbed is GameObject: grabbed.grabed = false
 				grabbed = null
 				GlobalInfo.buyBlocked = false
+	
+	if event.is_action_pressed("sell") and grabbed is GearClass:
+		var sellPoints = grabbed.properties.sellValue
+		GlobalInfo.addPoints(sellPoints)
+		grabbed.queue_free()
+		grabbed = null
+		GlobalInfo.buyBlocked = false
 
 func _process(_delta: float) -> void:
 	position = currentPos
